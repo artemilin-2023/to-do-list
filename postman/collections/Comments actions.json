@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "12606d84-6528-4b18-bac5-92009452d3c9",
-		"name": "Commets actions",
+		"name": "Comments actions",
 		"description": "Действия с комментариями",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "33336168-12606d84-6528-4b18-bac5-92009452d3c9"

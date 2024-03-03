@@ -1,14 +1,14 @@
 {
 	"info": {
 		"_postman_id": "ff2f0486-6d9e-41d0-a34d-3cbbd9e16bc7",
-		"name": "Task actions",
+		"name": "Issues actions",
 		"description": "Действия с задачами",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "33336168-ff2f0486-6d9e-41d0-a34d-3cbbd9e16bc7"
 	},
 	"item": [
 		{
-			"name": "Create new task",
+			"name": "Create new issue",
 			"id": "fe0986a2-8779-45d3-ad57-7820f1a8a595",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -41,7 +41,7 @@
 			"response": []
 		},
 		{
-			"name": "Get task by id",
+			"name": "Get issue by id",
 			"id": "2f7da4e0-c5d1-4d90-9672-cf8f176765eb",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "Update task",
+			"name": "Update issue",
 			"id": "b4e703fc-f5bd-42c8-9bfb-757ec6abaefd",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
@@ -121,7 +121,7 @@
 			"response": []
 		},
 		{
-			"name": "Remove task",
+			"name": "Remove issue",
 			"id": "399ee4b5-3c93-409e-82ec-6faa862cecca",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
