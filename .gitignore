@@ -1,0 +1,18 @@
+# bin
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+[Bb]uild/
+*.db
+*.sqlite
+
+# other
+[Ss]ecrets/
+*.log
+
+
+# ide
+*.vs
+*.vscode
+*.idea
+
