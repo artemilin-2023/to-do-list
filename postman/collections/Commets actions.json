@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "12606d84-6528-4b18-bac5-92009452d3c9",
+		"name": "Commets actions",
+		"description": "Действия с комментариями",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "33336168-12606d84-6528-4b18-bac5-92009452d3c9"
+	},
+	"item": [
+		{
+			"name": "Create new commnet Copy",
+			"id": "e2622812-1a36-4206-b13d-87d47f448f0b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"some message text\",\n    \"user_id\": \"guid\",\n    \"board_id\": \"guid\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/comments/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						"comments",
+						""
+					]
+				},
+				"description": "Создать новый комментарий"
+			},
+			"response": []
+		},
+		{
+			"name": "Get comment by id",
+			"id": "fa239504-9fcb-43dc-b1e7-e6bf89df68f5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/comments/?id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						"comments",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{$guid}}",
+							"description": "Id комментария"
+						}
+					]
+				},
+				"description": "Получить комментарий по его Id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get comments by board id",
+			"id": "f903c9b7-338d-4e6e-8bcb-f55efc8da6b0",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/comments/?board={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						"comments",
+						""
+					],
+					"query": [
+						{
+							"key": "board",
+							"value": "{{$guid}}",
+							"description": "Id доски"
+						}
+					]
+				},
+				"description": "Получить список комментариев доски по её id"
+			},
+			"response": []
+		},
+		{
+			"name": "Update comment",
+			"id": "16a57efe-a7da-409c-81f5-ab1fb233d96a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"edit text message\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/comments/?id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						"comments",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{$guid}}",
+							"description": "Id комментария"
+						}
+					]
+				},
+				"description": "Редактировать комментарий"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove comment",
+			"id": "00e89ec6-05b3-41c0-b963-0356b7b6ec42",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/comments/?Id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						"comments",
+						""
+					],
+					"query": [
+						{
+							"key": "Id",
+							"value": "{{$guid}}",
+							"description": "Id комментария"
+						}
+					]
+				},
+				"description": "Удалить комментарий"
+			},
+			"response": []
+		}
+	]
+}

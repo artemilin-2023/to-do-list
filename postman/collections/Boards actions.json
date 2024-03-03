@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "2f8d6d83-04bb-4505-bf84-4cdd399c646f",
+		"name": "Boards actions",
+		"description": "Действия с доской задач",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "33336168-2f8d6d83-04bb-4505-bf84-4cdd399c646f"
+	},
+	"item": [
+		{
+			"name": "Create new board",
+			"id": "24024f81-7b74-46af-af1d-7244d3300d7d",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"title of board\",\n    \"user_id\": \"guid\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					]
+				},
+				"description": "Создать новую доску"
+			},
+			"response": []
+		},
+		{
+			"name": "Get board by id",
+			"id": "c8e69649-721a-4759-ae9d-6e413b781151",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/?id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{$guid}}",
+							"description": "Id доски"
+						}
+					]
+				},
+				"description": "Получить доску со всеми ее задачами"
+			},
+			"response": []
+		},
+		{
+			"name": "Update board",
+			"id": "10c213dd-eb1d-45a7-ae2f-f64330408bda",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"new title of board\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/?id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{$guid}}",
+							"description": "Id доски"
+						}
+					]
+				},
+				"description": "Редактировать доску"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove board",
+			"id": "d831de45-f24e-4d7b-8988-a83ed2c07a5a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/?id={{$guid}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{{$guid}}",
+							"description": "Id доски"
+						}
+					]
+				},
+				"description": "Удалить доску со всеми ее задачами"
+			},
+			"response": []
+		},
+		{
+			"name": "Export user boards",
+			"id": "b3e9b6f9-4f77-46b9-a9f2-211cdae611d4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/boards/?action=export&format={format}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "export",
+							"description": "Указывает, что данные надо **_экспотрировать_**"
+						},
+						{
+							"key": "format",
+							"value": "{format}",
+							"description": "Формат, в который экспотрируются данные"
+						}
+					]
+				},
+				"description": "Экспортирует данные пользователья обо всех его досках в указанный формат"
+			},
+			"response": []
+		},
+		{
+			"name": "Import user boards",
+			"id": "cff62a2c-2947-41c3-8a3c-072991c7e8c6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\":[\n        {\n            \"id\": \"guid\",\n            \"title\": \"Home work\",\n            \"tasks\": [\n                {\n                    \"id\": \"guid\",\n                    \"creation_time\": \"01.01.2024 00:00\",\n                    \"description\": \"some task description\",\n                    \"status\": 0,\n                    \"board_id\": \"guid\"\n                },\n                {\n                    \"id\": \"guid\",\n                    \"creation_time\": \"01.01.2024 23:59\",\n                    \"description\": \"any other task description\",\n                    \"status\": 3,\n                    \"board_id\": \"guid\"\n                }\n            ]\n        },\n        {\n            \"id\": \"guid\",\n            \"title\": \"TO-DO list project\",\n            \"tasks\": [\n                {\n                    \"id\": \"guid\",\n                    \"creation_time\": \"01.01.2024 00:00\",\n                    \"description\": \"some task description\",\n                    \"status\": 0,\n                    \"board_id\": \"guid\"\n                },\n                {\n                    \"id\": \"guid\",\n                    \"creation_time\": \"01.01.2024 23:59\",\n                    \"description\": \"any other task description\",\n                    \"status\": 1,\n                    \"board_id\": \"guid\"\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/boards/?action=import&format={format}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "import",
+							"description": "Указывает, что данные надо **_импортировать_**"
+						},
+						{
+							"key": "format",
+							"value": "{format}",
+							"description": "Формат, из которго будет осуществлятьтся импорт"
+						}
+					]
+				},
+				"description": "Импортирует данные пользователя из указанного формата"
+			},
+			"response": []
+		}
+	]
+}

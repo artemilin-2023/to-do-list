@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "a34cafac-d82b-4a4c-ace2-de78b4c203ee",
+		"name": "Account actions",
+		"description": "Действия с аккаунтом пользователя",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "33336168-a34cafac-d82b-4a4c-ace2-de78b4c203ee"
+	},
+	"item": [
+		{
+			"name": "Sign up",
+			"id": "eba34167-2b20-4e3a-8a05-daff3a22532a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"usermame\": \"Vestyac\",\n    \"email\" : \"test@mai.education\",\n    \"password\" : \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup",
+						""
+					]
+				},
+				"description": "Регитрация нового пользователя в системе"
+			},
+			"response": []
+		},
+		{
+			"name": "Log in",
+			"id": "17d098e7-8119-4845-9b87-564b6bd994af",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"test@mai.education\",\n    \"password\" : \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/login/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"login",
+						""
+					]
+				},
+				"description": "Вход в систему для пользователя с существующим аккаунтом"
+			},
+			"response": []
+		},
+		{
+			"name": "Log out",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf2763c0-bcc8-4417-9e03-00311d718b0c",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "9672d21a-7074-443d-bc51-778aa5ee3f58",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/accounts/logout/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"accounts",
+						"logout",
+						""
+					]
+				},
+				"description": "Выход из аккаунта для пользователя в текущей сессии"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove account",
+			"id": "bc9fc97f-9a43-4b28-abba-260e5107398c",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/accounts/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"accounts",
+						""
+					]
+				},
+				"description": "Удаление аккаунта пользователя"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "83941273-94e8-482a-a80f-be0eff9af470",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "3be66787-d519-47e1-9a95-b9ae028c0bd4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
