@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Application.Abstracts;
+using TaskManager.Application.Abstracts.Repositories;
 using TaskManager.Domain;
-using TaskManager.Infrastructure.Entities;
+using TaskManager.Infrastructure.Data.Entities;
 
-namespace TaskManager.Infrastructure
+namespace TaskManager.Infrastructure.Data.Repositories
 {
     internal class UserRepository : IRepository<User>
     {

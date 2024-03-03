@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaskManager.Infrastructure.Entities;
-using TaskManager.Infrastructure.EntitiesConfiguration;
+using TaskManager.Infrastructure.Data.Entities;
+using TaskManager.Infrastructure.Data.EntitiesConfiguration;
 
-namespace TaskManager.Infrastructure
+namespace TaskManager.Infrastructure.Data
 {
     public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {

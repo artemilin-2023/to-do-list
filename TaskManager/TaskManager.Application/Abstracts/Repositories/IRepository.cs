@@ -1,6 +1,6 @@
-﻿namespace TaskManager.Application.Abstracts
+﻿namespace TaskManager.Application.Abstracts.Repositories
 {
-    public interface IRepository<T> where T: class
+    public interface IRepository<T> where T : class
     {
         Task<T> GetByIdAsync(Guid id);
         IEnumerable<T> GetAll();

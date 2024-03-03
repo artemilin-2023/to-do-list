@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using TaskManager.Domain;
-using TaskManager.Infrastructure.Entities;
+using TaskManager.Infrastructure.Data.Entities;
 
-namespace TaskManager.Infrastructure
+namespace TaskManager.Infrastructure.Data
 {
     public class MapperProfile : Profile
     {

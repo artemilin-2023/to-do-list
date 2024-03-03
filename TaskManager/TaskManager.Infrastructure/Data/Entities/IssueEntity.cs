@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.Infrastructure.Entities
+namespace TaskManager.Infrastructure.Data.Entities
 {
     internal class IssueEntity : BaseEntity
     {

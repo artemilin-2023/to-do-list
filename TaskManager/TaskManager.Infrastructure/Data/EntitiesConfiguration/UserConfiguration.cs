@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TaskManager.Infrastructure.Entities;
+using TaskManager.Infrastructure.Data.Entities;
 
-namespace TaskManager.Infrastructure.EntitiesConfiguration
+namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
 {
     internal class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {

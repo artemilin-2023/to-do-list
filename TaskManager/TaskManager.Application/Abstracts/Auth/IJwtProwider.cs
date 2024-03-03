@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManager.Infrastructure.Entities
+namespace TaskManager.Application.Abstracts.Auth
 {
-    internal abstract class BaseEntity
+    internal interface IJwtProwider
     {
-        public Guid Id { get; set; }
+
     }
 }
