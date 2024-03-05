@@ -18,7 +18,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"description\": \"same description\",\n    \"status\": 0,\n    \"board_id\": \"guid\"\n}",
+					"raw": "{\n    \"description\": \"same description\",\n    \"status\": 0,\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -26,14 +26,23 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/boards/tasks/",
+					"raw": "{{base_url}}/boards/{board_id}/tasks/",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"boards",
+						"{board_id}",
 						"tasks",
 						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"type": "text",
+							"disabled": true
+						}
 					]
 				},
 				"description": "Создать новую задачу"
@@ -59,21 +68,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/boards/tasks/?id={{$guid}}",
+					"raw": "{{base_url}}/boards/{board_id}/tasks/{{$guid}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"boards",
+						"{board_id}",
 						"tasks",
-						""
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{$guid}}",
-							"description": "Id задачи"
-						}
+						"{{$guid}}"
 					]
 				},
 				"description": "Получить существующую задачу"
@@ -99,21 +102,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/boards/tasks/?id={{$guid}}",
+					"raw": "{{base_url}}/boards/{board_id}/tasks/{{$guid}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"boards",
+						"{board_id}",
 						"tasks",
-						""
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{$guid}}",
-							"description": "Id задачи"
-						}
+						"{{$guid}}"
 					]
 				},
 				"description": "Редактировать задачу"
@@ -139,21 +136,15 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/boards/tasks/?id={{$guid}}",
+					"raw": "{{base_url}}/boards/{board_id}/tasks/{{$guid}}",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"boards",
+						"{board_id}",
 						"tasks",
-						""
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "{{$guid}}",
-							"description": "Id задачи"
-						}
+						"{{$guid}}"
 					]
 				},
 				"description": "Удалить задачу"
