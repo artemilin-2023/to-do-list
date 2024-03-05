@@ -19,13 +19,15 @@ namespace TaskManager.Infrastructure.Auth
 
         public string Generate(User user)
         {
-            var claim = new[] { new Claim("userId", user.Id.ToString()) }.AsEnumerable();
+            var claim = new[] { new Claim("userId", user.Id.ToString()) };
             var creditionals = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
-                SecurityAlgorithms.HmacSha256
-                );
+                SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(claims: claim, expires: DateTime.UtcNow.AddHours(options.ExpireHourse), signingCredentials: creditionals);
+            var token = new JwtSecurityToken(
+                claims: claim, 
+                expires: DateTime.UtcNow.AddHours(12), 
+                signingCredentials: creditionals);
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenValue;
