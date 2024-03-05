@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TaskManager.API.DTO;
+using TaskManager.API.Contracts.Account;
 using TaskManager.Application.Services;
 
 namespace TaskManager.API.Controllers
@@ -21,10 +20,15 @@ namespace TaskManager.API.Controllers
             if (request == null || request.Username == null || request.Email == null || request.Password == null)
                 return Results.BadRequest();
 
-            await accountServices.Registr(request.Username, request.Email, request.Password);
-            await accountServices.Login(request.Email, request.Password);
+            var token = await accountServices.Registr(request.Username, request.Email, request.Password);
+            SetToken(token);
 
             return Results.Ok("sign up success");
+        }
+
+        private void SetToken(string token)
+        {
+            HttpContext.Response.Cookies.Append("meow", token);
         }
 
         [HttpPost("/login/")]
@@ -34,7 +38,7 @@ namespace TaskManager.API.Controllers
                 return Results.BadRequest();
 
             var token = await accountServices.Login(request.Email, request.Password);
-            HttpContext.Response.Cookies.Append("meow", token);
+            SetToken(token);
 
             return Results.Ok("log in success");
         }

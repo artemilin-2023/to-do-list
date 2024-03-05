@@ -17,7 +17,7 @@ namespace TaskManager.Application.Services
             this.jwtProvider = jwtProvider;
         }
 
-        public async Task Registr(string username, string email, string password)
+        public async Task<string> Registr(string username, string email, string password)
         {
             if (await userRepository.GetByEmailAsync(email) != null)
                 throw new Exception("User already exist");
@@ -25,7 +25,9 @@ namespace TaskManager.Application.Services
             var hash = passwordHasher.Generate(password);
             var user = new User(Guid.NewGuid(), username, email, hash);
             await userRepository.AddAsync(user);
-            await userRepository.SaveAsync();
+
+            var token = jwtProvider.Generate(user);
+            return token;
         }
 
         public async Task<string> Login(string email, string password)
