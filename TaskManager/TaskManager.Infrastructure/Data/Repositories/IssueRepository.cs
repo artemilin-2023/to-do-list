@@ -6,7 +6,7 @@ using TaskManager.Infrastructure.Data.Entities;
 
 namespace TaskManager.Infrastructure.Data.Repositories
 {
-    internal class IssueRepository : IRepository<Issue>
+    public class IssueRepository : IRepository<Issue>
     {
         private readonly DataContext database;
         private readonly IMapper mapper;
@@ -51,7 +51,7 @@ namespace TaskManager.Infrastructure.Data.Repositories
         {
             var issueEntity = await database.Issues.SingleAsync(i => i.Id == id);
             issueEntity.Description = entity.Description ?? issueEntity.Description;
-            issueEntity.BoardId = entity.BoardId;
+            issueEntity.BoardId = entity.BoardId != Guid.Empty ? entity.BoardId : issueEntity.BoardId;
         }
     }
 }
