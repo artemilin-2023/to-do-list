@@ -9,6 +9,7 @@ namespace TaskManager.Infrastructure.Data
         public MapperProfile()
         {
             CreateMap<UserEntity, User>().ReverseMap();
+            CreateMap<IssueEntity, Issue>().ReverseMap();
         }
     }
 }

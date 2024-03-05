@@ -10,6 +10,6 @@ namespace TaskManager.Infrastructure.Data.Entities
     {
         public string Description { get; set; }
         public DateTime CreationTime { get; set; }
-        public Guid BoardId { get; private set; }
+        public Guid BoardId { get; set; }
     }
 }
