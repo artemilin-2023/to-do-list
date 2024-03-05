@@ -6,7 +6,7 @@ namespace TaskManager.Infrastructure.Data
 {
     public class MapperProfile : Profile
     {
-        public void UserProfile()
+        public MapperProfile()
         {
             CreateMap<UserEntity, User>().ReverseMap();
         }

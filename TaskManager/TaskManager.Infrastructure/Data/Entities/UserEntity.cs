@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManager.Infrastructure.Data.Entities
 {
-    internal class UserEntity : BaseEntity
+    public class UserEntity : BaseEntity
     {
         public string Username { get; set; }
         public string Email { get; set; }

@@ -6,12 +6,12 @@ using TaskManager.Infrastructure.Data.Entities;
 
 namespace TaskManager.Infrastructure.Data.Repositories
 {
-    internal class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
-        private readonly Mapper mapper;
+        private readonly IMapper mapper;
         private readonly DataContext database;
 
-        public UserRepository(Mapper mapper, DataContext database)
+        public UserRepository(IMapper mapper, DataContext database)
         {
             ArgumentNullException.ThrowIfNull(mapper);
             ArgumentNullException.ThrowIfNull(database);
@@ -35,6 +35,12 @@ namespace TaskManager.Infrastructure.Data.Repositories
         public IEnumerable<User> GetAll()
         {
             return database.Users.Select(u => mapper.Map<User>(u)).AsEnumerable();
+        }
+
+        public async Task<User?> GetByEmailAsync(string email)
+        {
+            var userEntity = await database.Users.SingleOrDefaultAsync(u => u.Email == email);
+            return mapper.Map<User>(userEntity);
         }
 
         public async Task<User> GetByIdAsync(Guid id)
