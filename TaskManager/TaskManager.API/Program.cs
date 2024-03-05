@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using TaskManager.API.Exstensios;
 using TaskManager.Application.Abstracts.Auth;
 using TaskManager.Application.Abstracts.Repositories;
 using TaskManager.Application.Services;
@@ -15,12 +17,13 @@ var securityConfigs = new ConfigurationBuilder()
     .AddJsonFile("secrets/settings.json")
     .Build();
 
-services.Configure<JwtOptions>(securityConfigs.GetSection("JwtOptions"));
+services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+services.AddApiAuthentication(securityConfigs);
 services.AddAutoMapper(typeof(MapperProfile));
 services.AddDbContext<DataContext>(options =>
 {
@@ -42,7 +45,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always
+});
+
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

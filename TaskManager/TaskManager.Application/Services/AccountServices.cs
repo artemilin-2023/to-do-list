@@ -26,8 +26,6 @@ namespace TaskManager.Application.Services
             var user = new User(Guid.NewGuid(), username, email, hash);
             await userRepository.AddAsync(user);
             await userRepository.SaveAsync();
-
-            await Login(email, password);
         }
 
         public async Task<string> Login(string email, string password)
@@ -37,7 +35,7 @@ namespace TaskManager.Application.Services
                 throw new ArgumentNullException(nameof(user), message: $"Login failure, unable to find the user with the email {email}");
 
             if (!passwordHasher.Verify(password, user.PasswordHash))
-                throw new Exception("Virify failure");
+                throw new Exception("Password virify failure");
 
             var token = jwtProvider.Generate(user);
             return token;
