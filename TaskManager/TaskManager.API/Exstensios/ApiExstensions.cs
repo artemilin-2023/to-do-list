@@ -18,8 +18,8 @@ namespace TaskManager.API.Exstensios
                         {
                             ValidateAudience = false,
                             ValidateIssuer = false,
-                            ValidateLifetime = false,
-                            ValidateIssuerSigningKey = false,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.SecretKey))
                         };
 
