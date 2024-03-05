@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using TaskManager.Domain;
-using TaskManager.Infrastructure.Entities;
+using TaskManager.Infrastructure.Data.Entities;
 
-namespace TaskManager.Infrastructure
+namespace TaskManager.Infrastructure.Data
 {
     public class MapperProfile : Profile
     {
-        public void UserProfile()
+        public MapperProfile()
         {
             CreateMap<UserEntity, User>().ReverseMap();
         }

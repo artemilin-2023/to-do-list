@@ -1,17 +1,39 @@
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Infrastructure;
+using TaskManager.API.Exstensios;
+using TaskManager.Application.Abstracts.Auth;
+using TaskManager.Application.Abstracts.Repositories;
+using TaskManager.Application.Services;
+using TaskManager.Infrastructure.Auth;
+using TaskManager.Infrastructure.Data;
+using TaskManager.Infrastructure.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+
 var configuration = builder.Configuration;
+var securityConfigs = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("secrets/settings.json")
+    .Build();
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 
-builder.Services.AddDbContext<DataContext>(options =>
+services.AddControllers();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
+services.AddApiAuthentication(securityConfigs);
+services.AddAutoMapper(typeof(MapperProfile));
+services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(configuration.GetConnectionString("Database"));
 });
+
+services.AddScoped<IPasswordHasher, PasswordHasher>();
+services.AddScoped<IUserRepository, UserRepository>();
+services.AddScoped<IJwtProvider, JwtProvider>();
+services.AddScoped<AccountServices>();
 
 var app = builder.Build();
 
@@ -23,7 +45,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always,
+    Secure = CookieSecurePolicy.Always
+});
+
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

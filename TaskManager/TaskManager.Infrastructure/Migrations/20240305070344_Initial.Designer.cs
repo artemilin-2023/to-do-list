@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TaskManager.Infrastructure;
+using TaskManager.Infrastructure.Data;
 
 #nullable disable
 
 namespace TaskManager.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240303162100_Initial")]
+    [Migration("20240305070344_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace TaskManager.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManager.Infrastructure.Entities.UserEntity", b =>
+            modelBuilder.Entity("TaskManager.Infrastructure.Data.Entities.UserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
