@@ -2,7 +2,7 @@
 {
     internal class BoardEntity : BaseEntity
     {
-        public string Name { get; set; }
+        public string Title { get; set; }
         public Guid UserId { get; set; }
     }
 }

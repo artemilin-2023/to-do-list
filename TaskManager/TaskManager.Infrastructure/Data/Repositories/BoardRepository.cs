@@ -47,10 +47,10 @@ namespace TaskManager.Infrastructure.Data.Repositories
             await database.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid id, Board newBoard)
+        public async Task UpdateAsync(Guid id, string newTitle)
         {
             var entity = await database.Boards.SingleAsync(b => b.Id == id);
-            entity.Name = newBoard.Name ?? entity.Name;
+            entity.Title = newTitle ?? entity.Title;
         }
     }
 }

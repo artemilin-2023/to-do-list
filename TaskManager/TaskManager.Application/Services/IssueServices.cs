@@ -13,7 +13,7 @@ namespace TaskManager.Application.Services
             this.repository = repository;
         }
 
-        public async Task AddAsync(string description, IssueStatus status, Guid boardId)
+        public async Task CreateAsync(string description, IssueStatus status, Guid boardId)
         {
             var board = await boardRepository.GetAsync(boardId);
             if (board == null)

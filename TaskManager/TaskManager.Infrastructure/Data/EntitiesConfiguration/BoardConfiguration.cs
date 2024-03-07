@@ -10,7 +10,7 @@ namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
         {
             builder.HasKey(b => b.Id);
 
-            builder.Property(b => b.Name)
+            builder.Property(b => b.Title)
                    .IsRequired();
 
             builder.Property(b => b.UserId)

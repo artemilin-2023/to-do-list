@@ -33,7 +33,7 @@ namespace TaskManager.API.Controllers
             if (WrongRequest(request))
                 return Results.BadRequest();
 
-            await issueServices.AddAsync(request.Description, request.Status, boardId);
+            await issueServices.CreateAsync(request.Description, request.Status, boardId);
             return Results.Ok();
         }
 

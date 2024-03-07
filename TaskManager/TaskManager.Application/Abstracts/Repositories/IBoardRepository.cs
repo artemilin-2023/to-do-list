@@ -8,7 +8,7 @@ namespace TaskManager.Application.Abstracts.Repositories
         Task<Board?> GetAsync(Guid id);
         IEnumerable<Board> GetAll();
         Task DeleteAsync(Guid id);
-        Task UpdateAsync(Guid id,  Board newBoard);
+        Task UpdateAsync(Guid id,  string title);
         Task SaveAsync();
     }
 }
