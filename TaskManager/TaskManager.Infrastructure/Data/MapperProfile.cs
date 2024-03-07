@@ -10,6 +10,7 @@ namespace TaskManager.Infrastructure.Data
         {
             CreateMap<UserEntity, User>().ReverseMap();
             CreateMap<IssueEntity, Issue>().ReverseMap();
+            CreateMap<BoardEntity, Board>().ReverseMap();
         }
     }
 }

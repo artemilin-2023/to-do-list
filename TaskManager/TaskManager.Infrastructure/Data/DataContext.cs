@@ -8,11 +8,13 @@ namespace TaskManager.Infrastructure.Data
     {
         internal DbSet<UserEntity> Users { get; private set; }
         internal DbSet<IssueEntity> Issues { get; private set; }
+        internal DbSet<BoardEntity> Boards { get; private set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new IssueConfigurations());
+            modelBuilder.ApplyConfiguration(new BoardConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

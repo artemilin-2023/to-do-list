@@ -14,5 +14,7 @@
             Email = email;
             PasswordHash = passwordHash;
         }
+
+        public User() { }
     }
 }

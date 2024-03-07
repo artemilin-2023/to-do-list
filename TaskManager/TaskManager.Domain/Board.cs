@@ -12,5 +12,7 @@
             Name = name;
             UserId = userId;
         }
+
+        public Board() { }
     }
 }
