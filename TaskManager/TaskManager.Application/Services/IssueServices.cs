@@ -8,9 +8,10 @@ namespace TaskManager.Application.Services
         private readonly IIssueRepository repository;
         private readonly IBoardRepository boardRepository;
 
-        public IssueServices(IIssueRepository repository)
+        public IssueServices(IIssueRepository repository, IBoardRepository boardRepository)
         {
             this.repository = repository;
+            this.boardRepository = boardRepository;
         }
 
         public async Task CreateAsync(string description, IssueStatus status, Guid boardId)

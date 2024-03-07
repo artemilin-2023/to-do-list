@@ -3,14 +3,15 @@ using TaskManager.Domain;
 
 namespace TaskManager.Application.Services
 {
-    internal class BoardServises
+    public class BoardServices
     {
         private readonly IBoardRepository boardRepository;
         private readonly IUserRepository userRepository;
 
-        public BoardServises(IBoardRepository repository)
+        public BoardServices(IBoardRepository boardRepository, IUserRepository userRepository)
         {
-            this.boardRepository = repository;
+            this.boardRepository = boardRepository;
+            this.userRepository = userRepository;
         }
 
         public IEnumerable<Board> GetAllAsync()

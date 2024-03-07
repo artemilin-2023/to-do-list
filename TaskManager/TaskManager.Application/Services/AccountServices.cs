@@ -19,14 +19,16 @@ namespace TaskManager.Application.Services
 
         public async Task<string> Registr(string username, string email, string password)
         {
-            if (await userRepository.GetByEmailAsync(email) != null)
-                throw new Exception("User already exist");
+            var user = await userRepository.GetByEmailAsync(email);
+            if (user != null)
+                throw new Exception($"User with email {email} already exist. Id: {user.Id}");
 
             var hash = passwordHasher.Generate(password);
-            var user = new User(Guid.NewGuid(), username, email, hash);
-            await userRepository.AddAsync(user);
+            var newUser = new User(Guid.NewGuid(), username, email, hash);
+            await userRepository.AddAsync(newUser);
+            await userRepository.SaveAsync();
 
-            var token = jwtProvider.Generate(user);
+            var token = jwtProvider.Generate(newUser);
             return token;
         }
 
@@ -34,7 +36,7 @@ namespace TaskManager.Application.Services
         {
             var user = await userRepository.GetByEmailAsync(email);
             if (user == null)
-                throw new ArgumentNullException(nameof(user), message: $"Login failure, unable to find the user with the email {email}");
+                throw new ArgumentNullException(nameof(user), message: $"Login failure, unable to find the newUser with the email {email}");
 
             if (!passwordHasher.Verify(password, user.PasswordHash))
                 throw new Exception("Password virify failure");

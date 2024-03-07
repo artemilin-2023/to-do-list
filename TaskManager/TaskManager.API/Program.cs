@@ -40,6 +40,7 @@ services.AddSingleton<IBoardRepository, BoardRepository>();
 
 services.AddScoped<AccountServices>();
 services.AddScoped<IssueServices>();
+services.AddScoped<BoardServices>();
 
 var app = builder.Build();
 

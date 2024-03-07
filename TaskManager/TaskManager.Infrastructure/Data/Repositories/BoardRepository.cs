@@ -31,7 +31,7 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public IEnumerable<Board> GetAll()
         {
-            return database.Issues
+            return database.Boards
                 .Select(b => mapper.Map<Board>(b))
                 .AsEnumerable();
         }
