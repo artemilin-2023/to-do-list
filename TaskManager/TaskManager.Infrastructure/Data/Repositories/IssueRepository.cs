@@ -6,7 +6,7 @@ using TaskManager.Infrastructure.Data.Entities;
 
 namespace TaskManager.Infrastructure.Data.Repositories
 {
-    public class IssueRepository : IRepository<Issue>
+    public class IssueRepository : IIssueRepository
     {
         private readonly DataContext database;
         private readonly IMapper mapper;
@@ -29,16 +29,17 @@ namespace TaskManager.Infrastructure.Data.Repositories
             database.Issues.Remove(issueEntity);
         }
 
-        public IEnumerable<Issue> GetAll()
+        public IEnumerable<Issue> GetAll(Guid boardId)
         {
             return database.Issues
+                .Where(i => i.BoardId == boardId)
                 .Select(i => mapper.Map<Issue>(i))
                 .AsEnumerable();
         }
 
-        public async Task<Issue> GetByIdAsync(Guid id)
+        public async Task<Issue?> GetAsync(Guid id)
         {
-            var issueEntity = await database.Issues.SingleAsync(i => i.Id == id);
+            var issueEntity = database.Issues.SingleOrDefaultAsync(i => i.Id == id);
             return mapper.Map<Issue>(issueEntity);
         }
 

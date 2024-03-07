@@ -36,7 +36,7 @@ services.AddScoped<IPasswordHasher, PasswordHasher>();
 services.AddScoped<IJwtProvider, JwtProvider>();
 
 services.AddSingleton<IUserRepository, UserRepository>();
-services.AddSingleton<IRepository<Issue>, IssueRepository>();
+services.AddSingleton<IIssueRepository, IssueRepository>();
 
 services.AddScoped<AccountServices>();
 services.AddScoped<IssueServices>();
