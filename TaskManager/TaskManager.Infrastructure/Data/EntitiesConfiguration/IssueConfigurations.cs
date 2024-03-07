@@ -18,6 +18,9 @@ namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
 
             builder.Property(p => p.Description)
                    .IsRequired();
+
+            builder.Property(p => p.IssueStatus)
+                   .IsRequired();
         }
     }
 }

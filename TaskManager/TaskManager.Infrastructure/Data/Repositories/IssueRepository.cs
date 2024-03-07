@@ -39,7 +39,7 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public async Task<Issue?> GetAsync(Guid id)
         {
-            var issueEntity = database.Issues.SingleOrDefaultAsync(i => i.Id == id);
+            var issueEntity = await database.Issues.SingleOrDefaultAsync(i => i.Id == id);
             return mapper.Map<Issue>(issueEntity);
         }
 

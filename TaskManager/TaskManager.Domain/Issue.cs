@@ -16,5 +16,10 @@
             BoardId = boardId;
             Status = status;
         }
+
+        public Issue()
+        {
+            
+        }
     }
 }
