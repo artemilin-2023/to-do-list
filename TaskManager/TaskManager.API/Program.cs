@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 var configuration = builder.Configuration;
+configuration.AddEnvironmentVariables();
 var securityConfigs = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("secrets/settings.json")
@@ -36,6 +37,9 @@ services.AddScoped<IJwtProvider, JwtProvider>();
 services.AddScoped<AccountServices>();
 
 var app = builder.Build();
+
+var db = app.Services.GetRequiredService<DataContext>();
+await db.Database.MigrateAsync();
 
 app.UseSwagger();
 app.UseSwaggerUI();
