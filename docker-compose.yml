@@ -20,7 +20,6 @@ services:
 
   server:
     image: artemilin15474/to-do-list:v4
-    build: TaskManager/
     restart: always
     depends_on:
       - database
