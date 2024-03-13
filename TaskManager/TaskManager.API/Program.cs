@@ -4,6 +4,7 @@ using TaskManager.API.Exstensios;
 using TaskManager.Application.Abstracts.Auth;
 using TaskManager.Application.Abstracts.Repositories;
 using TaskManager.Application.Services;
+using TaskManager.Domain;
 using TaskManager.Infrastructure.Auth;
 using TaskManager.Infrastructure.Data;
 using TaskManager.Infrastructure.Data.Repositories;
@@ -18,6 +19,7 @@ var securityConfigs = new ConfigurationBuilder()
     .AddJsonFile("secrets/settings.json")
     .Build();
 
+
 services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 
 services.AddControllers();
@@ -29,12 +31,16 @@ services.AddAutoMapper(typeof(MapperProfile));
 services.AddDbContext<DataContext>(options =>
 {
     options.UseNpgsql(configuration.GetConnectionString("Database"));
-});
+}, ServiceLifetime.Singleton);
 
 services.AddScoped<IPasswordHasher, PasswordHasher>();
-services.AddScoped<IUserRepository, UserRepository>();
 services.AddScoped<IJwtProvider, JwtProvider>();
+
+services.AddSingleton<IUserRepository, UserRepository>();
+services.AddSingleton<IIssueRepository, IssueRepository>();
+
 services.AddScoped<AccountServices>();
+services.AddScoped<IssueServices>();
 
 var app = builder.Build();
 

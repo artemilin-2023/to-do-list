@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TaskManager.Domain;
 
 namespace TaskManager.Infrastructure.Data.Entities
 {
@@ -10,6 +6,7 @@ namespace TaskManager.Infrastructure.Data.Entities
     {
         public string Description { get; set; }
         public DateTime CreationTime { get; set; }
-        public Guid BoardId { get; private set; }
+        public Guid BoardId { get; set; }
+        public IssueStatus IssueStatus { get; set; }
     }
 }
