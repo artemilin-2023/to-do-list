@@ -2,7 +2,7 @@
 {
     public record ExteptionResponse
     (
-        string StatusCode,
+        int StatusCode,
         string Message
     );
 }

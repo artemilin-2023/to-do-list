@@ -4,7 +4,6 @@ using TaskManager.API.Exstensios;
 using TaskManager.Application.Abstracts.Auth;
 using TaskManager.Application.Abstracts.Repositories;
 using TaskManager.Application.Services;
-using TaskManager.Domain;
 using TaskManager.Infrastructure.Auth;
 using TaskManager.Infrastructure.Data;
 using TaskManager.Infrastructure.Data.Repositories;
@@ -38,9 +37,11 @@ services.AddScoped<IJwtProvider, JwtProvider>();
 
 services.AddSingleton<IUserRepository, UserRepository>();
 services.AddSingleton<IIssueRepository, IssueRepository>();
+services.AddSingleton<IBoardRepository, BoardRepository>();
 
 services.AddScoped<AccountServices>();
 services.AddScoped<IssueServices>();
+services.AddScoped<BoardServices>();
 
 var app = builder.Build();
 

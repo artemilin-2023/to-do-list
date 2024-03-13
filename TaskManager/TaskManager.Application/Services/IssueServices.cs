@@ -6,15 +6,19 @@ namespace TaskManager.Application.Services
     public class IssueServices
     {
         private readonly IIssueRepository repository;
+        private readonly IBoardRepository boardRepository;
 
-        public IssueServices(IIssueRepository repository)
+        public IssueServices(IIssueRepository repository, IBoardRepository boardRepository)
         {
             this.repository = repository;
+            this.boardRepository = boardRepository;
         }
 
-        public async Task AddAsync(string description, IssueStatus status, Guid boardId)
+        public async Task CreateAsync(string description, IssueStatus status, Guid boardId)
         {
-            // todo: После реализации репозитория досок, реализовать проверку на наличе доски с boardId
+            var board = await boardRepository.GetAsync(boardId);
+            if (board == null)
+                throw new Exception($"The Issue could not be created because board with id = {boardId} does not exist");
 
             var issue = new Issue(
                     Guid.NewGuid(),

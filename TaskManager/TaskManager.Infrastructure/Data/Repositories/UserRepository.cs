@@ -45,7 +45,7 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public async Task<User> GetByIdAsync(Guid id)
         {
-            var userEntity = await database.Users.SingleAsync(u => u.Id == id);
+            var userEntity = await database.Users.SingleOrDefaultAsync(u => u.Id == id);
             return mapper.Map<User>(userEntity);
         }
 

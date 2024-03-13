@@ -17,9 +17,6 @@
             Status = status;
         }
 
-        public Issue()
-        {
-            
-        }
+        public Issue() { }
     }
 }
