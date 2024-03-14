@@ -19,7 +19,7 @@ services:
       - 5432
 
   server:
-    image: artemilin15474/to-do-list:v6
+    image: artemilin15474/to-do-list:v7
     restart: always
     depends_on:
       - database
