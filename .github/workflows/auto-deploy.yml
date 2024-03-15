@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  publish_image:
+  publish-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +35,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: publish_image
+    needs: publish-image
     
     steps:
       - name: Set up tailscale
@@ -48,11 +48,10 @@ jobs:
       - name: Connect to VPS and restart docker containers
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.HOST }}
+          host: 100.97.57.65 #${{ secrets.HOST }}
           username: ${{ secrets.HOST_USERNAME }}
           password: ${{ secrets.HOST_PASSWORD }}
-          port: ${{ secrets.PORT }}
-          proxy_port: ${{ secrets.PORT }}
+          port: 8022 #${{ secrets.PORT }}
           timeout: 600s
           script: | 
             whoami
