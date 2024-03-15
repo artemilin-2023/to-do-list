@@ -52,11 +52,6 @@ jobs:
           username: ${{ secrets.HOST_USERNAME }}
           password: ${{ secrets.HOST_PASSWORD }}
           port: ${{ secrets.PORT }}
-          script: |
-            cd ${{ secrets.PATH_TO_WORK_DIR }};
-            git checkout master;
-            git pull;
-            docker compose down;
-            docker compose up -d;
-            docker system prune --all --force;
+          script: | 
+            whoami
         
