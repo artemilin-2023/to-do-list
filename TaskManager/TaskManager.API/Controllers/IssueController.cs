@@ -9,10 +9,12 @@ namespace TaskManager.API.Controllers
     public class IssueController : ControllerBase
     {
         private readonly IssueServices issueServices;
+        private readonly AccountServices accountServices;
 
-        public IssueController(IssueServices issueServices)
+        public IssueController(IssueServices issueServices, AccountServices accountServices)
         {
             this.issueServices = issueServices;
+            this.accountServices = accountServices;
         }
 
         [HttpGet("/boards/{boardId}/issues/")]
@@ -34,7 +36,10 @@ namespace TaskManager.API.Controllers
             if (WrongRequest(request))
                 return Results.BadRequest();
 
-            await issueServices.CreateAsync(request.Description, request.Status, boardId);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
+            await issueServices.CreateAsync(boardId, userId, request.Description, request.Status);
+
             return Results.Ok();
         }
 
@@ -47,14 +52,20 @@ namespace TaskManager.API.Controllers
             if (WrongRequest(request))
                 return Results.BadRequest();
 
-            await issueServices.UpdateAsync(id, request.Description, request.Status);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
+            await issueServices.UpdateAsync(id, boardId, userId, request.Description, request.Status);
+
             return Results.Ok();
         }
 
         [HttpDelete("/boards/{boardId}/issues/{id}")]
         public async Task<IResult> Delete(Guid boardId, Guid id)
         {
-            await issueServices.DeleteAsync(id);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
+            await issueServices.DeleteAsync(id, boardId, userId);
+
             return Results.Ok();
         }
     }

@@ -23,8 +23,10 @@ namespace TaskManager.API.Controllers
             if (WrongRequest(request))
                 return Results.BadRequest();
 
-            var userId = accountServices.GetUserId(HttpContext.Request.Cookies["meow"]!);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
             await boardServices.CreateAsync(request.Title, userId);
+
             return Results.Ok();
         }
 
@@ -47,15 +49,20 @@ namespace TaskManager.API.Controllers
         [HttpDelete("/boards/{id}")]
         public async Task<IResult> Delete(Guid id)
         {
-            var userId = accountServices.GetUserId(HttpContext.Request.Cookies["meow"]!);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
             await boardServices.DeleteAsync(id, userId);
+
             return Results.Ok();
         }
 
         [HttpPut("/boards/{id}")]
         public async Task<IResult> Update(Guid id, [FromBody] string newTitle)
         {
-            await boardServices.UpdateAsync(id, newTitle);
+            var token = HttpContext.Request.Cookies["meow"]!;
+            var userId = accountServices.GetUserId(token);
+            await boardServices.UpdateAsync(id, userId, newTitle);
+
             return Results.Ok();
         }
     }

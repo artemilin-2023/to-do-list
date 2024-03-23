@@ -8,13 +8,21 @@ namespace TaskManager.API.Controllers
     public class TeapotController : Controller
     {
         [Authorize, HttpGet("/makecoffee/")]
-        public IResult Index(string coffeeType)
+        public IResult Index(string? coffeeType)
         {
             if (coffeeType.IsNullOrEmpty())
-                return Results.BadRequest($"{nameof(coffeeType)}Can`t be null");
+                return Results.BadRequest($"{nameof(coffeeType)} Can`t be null");
 
-            HttpContext.Response.StatusCode = 418;
-            return Results.BadRequest("I`m a teapot!");
+            coffeeType = coffeeType.ToLower();
+            if (!coffeeType.Contains("tea"))
+            {
+                HttpContext.Response.StatusCode = 418;
+                return Results.BadRequest("I`m a teapot!");
+            }
+            
+            if (coffeeType.Contains("black"))
+                return Results.Ok("Your tea: ☕");
+            return Results.Ok("Your tea: 🍵");
         }
     }
 }

@@ -35,7 +35,7 @@ namespace TaskManager.Infrastructure.Data.Repositories
         public IEnumerable<Board> GetAll()
         {
             var boardsEntities = database.Boards.Include(b => b.User).ToList();
-            var result = boardsEntities.Select(b => mapper.Map<Board>(b)).AsEnumerable();
+            var result = boardsEntities.Select(mapper.Map<Board>).AsEnumerable();
 
             return result;
         }

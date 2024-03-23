@@ -26,8 +26,6 @@ namespace TaskManager.Infrastructure.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             var user = await database.Users
-                //.Include(u => u.Comments)
-                //.Include(u => u.Boards)
                 .SingleAsync(u => u.Id == id);
 
             database.Users.Remove(user);
