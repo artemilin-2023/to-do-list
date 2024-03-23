@@ -8,7 +8,7 @@
 *.sqlite
 
 # other
-[Ss]ecrets/
+#[Ss]ecrets/
 *.log
 
 
