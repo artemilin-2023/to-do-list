@@ -1,9 +1,10 @@
 ﻿namespace TaskManager.Infrastructure.Data.Entities
 {
-    internal class CommentEntity : BaseEntity
+    public class CommentEntity : BaseEntity
     {
-        public string Message { get; set; }
-        public Guid UserId { get; set; }
-        public Guid BoardId { get; set; }
+        public string Text { get; set; }
+
+        public UserEntity User { get; set; }
+        public BoardEntity Board { get; set; }
     }
 }

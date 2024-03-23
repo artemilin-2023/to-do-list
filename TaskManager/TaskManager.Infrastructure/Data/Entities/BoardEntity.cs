@@ -1,8 +1,11 @@
 ﻿namespace TaskManager.Infrastructure.Data.Entities
 {
-    internal class BoardEntity : BaseEntity
+    public class BoardEntity : BaseEntity
     {
         public string Title { get; set; }
-        public Guid UserId { get; set; }
+
+        public UserEntity User { get; set; }
+        public List<CommentEntity> Comments { get; set; } = new();
+        public List<IssueEntity> Issues { get; set; } = new();
     }
 }

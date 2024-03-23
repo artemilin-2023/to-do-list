@@ -17,9 +17,12 @@ namespace TaskManager.Infrastructure.Data.Repositories
             this.mapper = mapper;
         }
 
-        public async Task AddAsync(Issue entity)
+        public async Task AddAsync(Issue issue)
         {
-            var issueEntity = mapper.Map<IssueEntity>(entity);
+            var issueEntity = mapper.Map<IssueEntity>(issue);
+            var board = await database.Boards.SingleAsync(b => b.Id == issue.BoardId);
+            issueEntity.Board = board;
+
             await database.Issues.AddAsync(issueEntity);
         }
 
@@ -29,12 +32,10 @@ namespace TaskManager.Infrastructure.Data.Repositories
             database.Issues.Remove(issueEntity);
         }
 
-        public IEnumerable<Issue> GetAll(Guid boardId)
+        public async Task<IEnumerable<Issue>> GetAllAsync(Guid boardId)
         {
-            return database.Issues
-                .Where(i => i.BoardId == boardId)
-                .Select(i => mapper.Map<Issue>(i))
-                .AsEnumerable();
+            var board = await database.Boards.SingleAsync(i => i.Id == boardId);
+            return board.Issues.Select(mapper.Map<Issue>).AsEnumerable();
         }
 
         public async Task<Issue?> GetAsync(Guid id)
@@ -48,11 +49,11 @@ namespace TaskManager.Infrastructure.Data.Repositories
             await database.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid id, Issue entity)
+        public async Task UpdateAsync(Guid id, string? newDescription, IssueStatus? newStatus)
         {
             var issueEntity = await database.Issues.SingleAsync(i => i.Id == id);
-            issueEntity.Description = entity.Description ?? issueEntity.Description;
-            issueEntity.BoardId = entity.BoardId != Guid.Empty ? entity.BoardId : issueEntity.BoardId;
+            issueEntity.Description = newDescription ?? issueEntity.Description;
+            issueEntity.IssueStatus = newStatus ?? issueEntity.IssueStatus;
         }
     }
 }

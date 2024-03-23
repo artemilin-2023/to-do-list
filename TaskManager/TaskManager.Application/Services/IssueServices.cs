@@ -32,9 +32,9 @@ namespace TaskManager.Application.Services
             await repository.SaveAsync();
         }
 
-        public IEnumerable<Issue> GetAll(Guid boardId)
+        public Task<IEnumerable<Issue>> GetAllAsync(Guid boardId)
         {
-            return repository.GetAll(boardId);
+            return repository.GetAllAsync(boardId);
         }
 
         public async Task<Issue> GetAsync(Guid id)
@@ -48,12 +48,7 @@ namespace TaskManager.Application.Services
 
         public async Task UpdateAsync(Guid id, string description, IssueStatus status)
         {
-            var issue = await repository.GetAsync(id);
-            if (issue == null)
-                throw new ArgumentException("The Issue could not be updated because it does not exist");
-
-            var newIssue = new Issue(id, description, issue.CreationTime, Guid.Empty, status);
-            await repository.UpdateAsync(id, newIssue);
+            await repository.UpdateAsync(id, description, status);
             await repository.SaveAsync();
         }
 

@@ -9,15 +9,15 @@ namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(u => u.Id);
+            builder.Property(u => u.Username).IsRequired();
+            builder.Property(u => u.Email).IsRequired();
+            builder.Property(u => u.PasswordHash).IsRequired();
 
-            builder.Property(u => u.Username)
-                   .IsRequired();
+            builder.HasMany(u => u.Boards)
+                   .WithOne(b => b.User);
 
-            builder.Property(u => u.Email)
-                   .IsRequired();
-
-            builder.Property(u => u.PasswordHash)
-                   .IsRequired();
+            builder.HasMany(u => u.Comments)
+                   .WithOne(c => c.User);
         }
     }
 }

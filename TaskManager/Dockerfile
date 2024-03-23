@@ -9,4 +9,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App
 COPY --from=build App/out .
 
-ENTRYPOINT [ "dotnet", "./TaskManager.API.dll" ]
+ENTRYPOINT [ "dotnet", "./TaskManager.API.dll"]

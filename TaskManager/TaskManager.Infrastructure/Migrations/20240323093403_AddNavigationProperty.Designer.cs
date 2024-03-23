@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskManager.Infrastructure.Data;
@@ -11,9 +12,11 @@ using TaskManager.Infrastructure.Data;
 namespace TaskManager.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240323093403_AddNavigationProperty")]
+    partial class AddNavigationProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,24 @@ namespace TaskManager.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("TaskManager.Domain.Board", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Board");
+                });
 
             modelBuilder.Entity("TaskManager.Infrastructure.Data.Entities.BoardEntity", b =>
                 {
@@ -73,6 +94,9 @@ namespace TaskManager.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("BoardEntityId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("BoardId")
                         .HasColumnType("uuid");
 
@@ -87,6 +111,8 @@ namespace TaskManager.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BoardEntityId");
 
                     b.HasIndex("BoardId");
 
@@ -148,8 +174,12 @@ namespace TaskManager.Infrastructure.Migrations
 
             modelBuilder.Entity("TaskManager.Infrastructure.Data.Entities.IssueEntity", b =>
                 {
-                    b.HasOne("TaskManager.Infrastructure.Data.Entities.BoardEntity", "Board")
+                    b.HasOne("TaskManager.Infrastructure.Data.Entities.BoardEntity", null)
                         .WithMany("Issues")
+                        .HasForeignKey("BoardEntityId");
+
+                    b.HasOne("TaskManager.Domain.Board", "Board")
+                        .WithMany()
                         .HasForeignKey("BoardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

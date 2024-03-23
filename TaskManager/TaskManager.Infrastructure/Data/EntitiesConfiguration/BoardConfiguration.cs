@@ -9,12 +9,13 @@ namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<BoardEntity> builder)
         {
             builder.HasKey(b => b.Id);
+            builder.Property(b => b.Title).IsRequired();
 
-            builder.Property(b => b.Title)
-                   .IsRequired();
+            builder.HasMany(b => b.Issues)
+                   .WithOne(i => i.Board);
 
-            builder.Property(b => b.UserId)
-                   .IsRequired();
+            builder.HasMany(b => b.Comments)
+                   .WithOne(c => c.Board);
         }
     }
 }

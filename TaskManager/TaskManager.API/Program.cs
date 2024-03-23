@@ -12,13 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 var configuration = builder.Configuration;
-configuration.AddEnvironmentVariables();
 var securityConfigs = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("secrets/settings.json")
     .Build();
 
-
+#region Services registration
 services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 
 services.AddControllers();
@@ -42,12 +41,17 @@ services.AddSingleton<IBoardRepository, BoardRepository>();
 services.AddScoped<AccountServices>();
 services.AddScoped<IssueServices>();
 services.AddScoped<BoardServices>();
+# endregion
 
 var app = builder.Build();
 
+// Ќужно, чтобы миграции примен€лись при подн€тии проекта
+// из под docker-compose файла. “аким образом не требуетс€ примен€ть
+// команду dotnet ef database update и качать дополнительные инструменты.
 var db = app.Services.GetRequiredService<DataContext>();
 await db.Database.MigrateAsync();
 
+# region Middlewares
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -58,11 +62,10 @@ app.UseCookiePolicy(new CookiePolicyOptions
     MinimumSameSitePolicy = SameSiteMode.Strict,
     HttpOnly = HttpOnlyPolicy.Always
 });
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();
+# endregion
 
 app.Run();
