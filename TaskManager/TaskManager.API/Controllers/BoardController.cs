@@ -9,10 +9,12 @@ namespace TaskManager.API.Controllers
     public class BoardController : ControllerBase
     {
         private readonly BoardServices boardServices;
+        private readonly AccountServices accountServices;
 
-        public BoardController(BoardServices boardServices)
+        public BoardController(BoardServices boardServices, AccountServices accountServices)
         {
             this.boardServices = boardServices;
+            this.accountServices = accountServices;
         }
 
         [HttpPost("/boards/")]
@@ -21,7 +23,8 @@ namespace TaskManager.API.Controllers
             if (WrongRequest(request))
                 return Results.BadRequest();
 
-            await boardServices.CreateAsync(request.Title, request.UserId);
+            var userId = accountServices.GetUserId(HttpContext.Request.Cookies["meow"]!);
+            await boardServices.CreateAsync(request.Title, userId);
             return Results.Ok();
         }
 
@@ -37,13 +40,15 @@ namespace TaskManager.API.Controllers
         [HttpGet("/boards/")]
         public IResult GetAll()
         {
-            return Results.Ok(boardServices.GetAllAsync());
+            var result = boardServices.GetAll();
+            return Results.Ok(result);
         }
 
         [HttpDelete("/boards/{id}")]
         public async Task<IResult> Delete(Guid id)
         {
-            await boardServices.DeleteAsync(id);
+            var userId = accountServices.GetUserId(HttpContext.Request.Cookies["meow"]!);
+            await boardServices.DeleteAsync(id, userId);
             return Results.Ok();
         }
 

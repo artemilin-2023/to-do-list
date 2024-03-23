@@ -1,31 +1,20 @@
 version: '3'
-
-networks:
-  net:
-    driver: bridge
-
 services:
   database:
     image: postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: database
     volumes:
       - db_volume:/var/lib/postgresql/data/
-    networks:
-      - net
-    ports:
-      - 5432
 
   server:
-    image: artemilin15474/to-do-list:v7
-    restart: always
+    image: artemilin15474/to-do-list:latest
+    build: ./TaskManager/
+    restart: unless-stopped
     depends_on:
       - database
-
-    networks:
-      - net
     ports:
       - 80:8080
 

@@ -11,6 +11,7 @@ namespace TaskManager.Infrastructure.Auth
     public class JwtProvider : IJwtProvider
     {
         private readonly JwtOptions options;
+        private const string UserIdClaim = "userId";
 
         public JwtProvider(IOptions<JwtOptions> options)
         {
@@ -19,7 +20,7 @@ namespace TaskManager.Infrastructure.Auth
 
         public string Generate(User user)
         {
-            var claim = new[] { new Claim("userId", user.Id.ToString()) };
+            var claim = new[] { new Claim(UserIdClaim, user.Id.ToString()) };
             var creditionals = new SigningCredentials(
                 new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.SecretKey)),
                 SecurityAlgorithms.HmacSha256);
@@ -31,6 +32,16 @@ namespace TaskManager.Infrastructure.Auth
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
             return tokenValue;
+        }
+
+        public Guid GetUserId(string token)
+        {
+            var jwtToken = new JwtSecurityTokenHandler()
+                .ReadJwtToken(token);
+            var claim = jwtToken.Claims
+                .First(c => c.Type == UserIdClaim);
+
+            return Guid.Parse(claim.Value);
         }
     }
 }

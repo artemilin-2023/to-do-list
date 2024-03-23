@@ -14,7 +14,7 @@ namespace TaskManager.Application.Services
             this.userRepository = userRepository;
         }
 
-        public IEnumerable<Board> GetAllAsync()
+        public IEnumerable<Board> GetAll()
         {
             return boardRepository.GetAll();
         }
@@ -39,8 +39,16 @@ namespace TaskManager.Application.Services
             await boardRepository.SaveAsync();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id, Guid userId)
         {
+            var board = await boardRepository.GetAsync(id);
+
+            if (board == null)
+                throw new Exception($"Can't find board with id {id}");
+
+            if (board.UserId != userId)
+                throw new Exception("It is impossible to delete someone else's board");
+
             await boardRepository.DeleteAsync(id);
             await boardRepository.SaveAsync();
         }

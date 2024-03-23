@@ -8,6 +8,7 @@ namespace TaskManager.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly AccountServices accountServices;
+        private const string CookieName = "meow";
 
         public AccountController(AccountServices accountServices)
         {
@@ -28,7 +29,7 @@ namespace TaskManager.API.Controllers
 
         private void SetToken(string token)
         {
-            HttpContext.Response.Cookies.Append("meow", token);
+            HttpContext.Response.Cookies.Append(CookieName, token);
         }
 
         [HttpPost("/login/")]
@@ -41,6 +42,21 @@ namespace TaskManager.API.Controllers
             SetToken(token);
 
             return Results.Ok("log in success");
+        }
+
+        [HttpGet("/logout")]
+        public IResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete(CookieName);
+            return Results.Ok();
+        }
+
+        [HttpDelete("/account")]
+        public async Task<IResult> Delete()
+        {
+            var userId = accountServices.GetUserId(HttpContext.Request.Cookies[CookieName]!);
+            await accountServices.DeleteAccountAsync(userId);
+            return Results.Ok();
         }
     }
 }

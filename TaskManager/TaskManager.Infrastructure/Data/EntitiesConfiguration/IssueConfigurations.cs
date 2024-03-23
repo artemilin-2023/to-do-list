@@ -9,18 +9,12 @@ namespace TaskManager.Infrastructure.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<IssueEntity> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(p => p.CreationTime).IsRequired();
+            builder.Property(p => p.Description).IsRequired();
+            builder.Property(p => p.IssueStatus).IsRequired();
 
-            builder.Property(p => p.CreationTime)
-                   .IsRequired();
-
-            builder.Property(p => p.BoardId)
-                   .IsRequired();
-
-            builder.Property(p => p.Description)
-                   .IsRequired();
-
-            builder.Property(p => p.IssueStatus)
-                   .IsRequired();
+            builder.HasOne(i => i.Board)
+                   .WithMany(b => b.Issues);
         }
     }
 }

@@ -4,7 +4,6 @@ namespace TaskManager.API.Contracts.Board
 {
     public record BoardRequest
     (
-        [Required] string Title,
-        [Required] Guid UserId
+        [Required] string Title
     );
 }

@@ -18,7 +18,8 @@ namespace TaskManager.API.Controllers
         [HttpGet("/boards/{boardId}/issues/")]
         public async Task<IResult> GetAll(Guid boardId)
         {
-            return Results.Ok(issueServices.GetAll(boardId));
+            var result = await issueServices.GetAllAsync(boardId);
+            return Results.Ok(result);
         }
 
         [HttpGet("/boards/{boardId}/issues/{id}")]
@@ -38,7 +39,7 @@ namespace TaskManager.API.Controllers
         }
 
         private bool WrongRequest(IssueRequest request) => 
-            request == null || request.Status == null || request.Description == null;
+            request == null || request.Description == null;
 
         [HttpPut("/boards/{boardId}/issues/{id}")]
         public async Task<IResult> Update(Guid boardId, Guid id, [FromBody] IssueRequest request)

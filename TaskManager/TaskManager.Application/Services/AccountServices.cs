@@ -36,13 +36,24 @@ namespace TaskManager.Application.Services
         {
             var user = await userRepository.GetByEmailAsync(email);
             if (user == null)
-                throw new ArgumentNullException(nameof(user), message: $"Login failure, unable to find the newUser with the email {email}");
+                throw new ArgumentNullException(nameof(user), message: $"Login failure, unable to find the user with the email {email}");
 
             if (!passwordHasher.Verify(password, user.PasswordHash))
                 throw new Exception("Password virify failure");
 
             var token = jwtProvider.Generate(user);
             return token;
+        }
+
+        public Guid GetUserId(string token)
+        {
+            return jwtProvider.GetUserId(token);
+        }
+
+        public async Task DeleteAccountAsync(Guid id)
+        {
+            await userRepository.DeleteAsync(id);
+            await userRepository.SaveAsync();
         }
     }
 }

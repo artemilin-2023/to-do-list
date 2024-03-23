@@ -8,7 +8,7 @@ namespace TaskManager.Application.Abstracts.Repositories
         Task<User> GetByIdAsync(Guid id);
         IEnumerable<User> GetAll();
         Task AddAsync(User user);
-        Task UpdateAsync(Guid id, User User);
+        Task UpdateAsync(Guid id, string? newUsername, string? newEmail, string? newPasswordHash);
         Task DeleteAsync(Guid id);
         Task SaveAsync();
     }

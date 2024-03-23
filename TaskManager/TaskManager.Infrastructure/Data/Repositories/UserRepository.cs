@@ -13,28 +13,33 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public UserRepository(IMapper mapper, DataContext database)
         {
-            ArgumentNullException.ThrowIfNull(mapper);
-            ArgumentNullException.ThrowIfNull(database);
-
             this.mapper = mapper;
             this.database = database;
         }
 
-        public async Task AddAsync(User entity)
+        public async Task AddAsync(User user)
         {
-            var userEntity = mapper.Map<UserEntity>(entity);
+            var userEntity = mapper.Map<UserEntity>(user);
             await database.Users.AddAsync(userEntity);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            var user = await database.Users.SingleAsync(u => u.Id == id);
+            var user = await database.Users
+                //.Include(u => u.Comments)
+                //.Include(u => u.Boards)
+                .SingleAsync(u => u.Id == id);
+
             database.Users.Remove(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            return database.Users.Select(u => mapper.Map<User>(u)).AsEnumerable();
+            var users = database.Users
+                .Include(u => u.Boards)
+                .Include(u => u.Comments);
+
+            return users.Select(mapper.Map<User>).AsEnumerable();
         }
 
         public async Task<User?> GetByEmailAsync(string email)
@@ -54,12 +59,12 @@ namespace TaskManager.Infrastructure.Data.Repositories
             await database.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid id, User entity)
+        public async Task UpdateAsync(Guid id, string? newUsername, string? newEmail, string? newPasswordHash)
         {
-            var user = await database.Users.FirstAsync(u => u.Id == id);
-            user.Email = entity.Email ?? user.Email;
-            user.Username = entity.Username ?? user.Username;
-            user.PasswordHash = entity.PasswordHash ?? user.PasswordHash;
+            var userEntity = await database.Users.FirstAsync(u => u.Id == id);
+            userEntity.Email = newEmail ?? userEntity.Email;
+            userEntity.Username = newUsername ?? userEntity.Username;
+            userEntity.PasswordHash = newPasswordHash ?? userEntity.PasswordHash;
         }
     }
 }

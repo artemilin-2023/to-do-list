@@ -20,6 +20,9 @@ namespace TaskManager.Infrastructure.Data.Repositories
         public async Task AddAsync(Board board)
         {
             var entity = mapper.Map<BoardEntity>(board);
+            var user = await database.Users.SingleAsync(u => u.Id == board.UserId);
+            entity.User = user;
+
             await database.Boards.AddAsync(entity);
         }
 
@@ -31,9 +34,10 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public IEnumerable<Board> GetAll()
         {
-            return database.Boards
-                .Select(b => mapper.Map<Board>(b))
-                .AsEnumerable();
+            var boardsEntities = database.Boards.Include(b => b.User).ToList();
+            var result = boardsEntities.Select(b => mapper.Map<Board>(b)).AsEnumerable();
+
+            return result;
         }
 
         public async Task<Board?> GetAsync(Guid id)
