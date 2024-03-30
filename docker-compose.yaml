@@ -1,4 +1,16 @@
-version: '3'
+version: "3.8"
+
+x-logging: &logging
+    logging:
+      driver: "loki"
+      options:
+        loki-url: "http://localhost:3100/loki/api/v1/push"
+        loki-batch-size: "100"
+        loki-retries: 2
+        loki-max-backoff: 1000ms
+        loki-timeout: 1s
+
+
 services:
   database:
     image: postgres
@@ -8,6 +20,7 @@ services:
       POSTGRES_DB: database
     volumes:
       - db_volume:/var/lib/postgresql/data/
+    <<: *logging
 
   server:
     image: artemilin15474/to-do-list:latest
@@ -17,6 +30,7 @@ services:
       - database
     ports:
       - 80:8080
+    <<: *logging
 
 volumes:
   db_volume:
