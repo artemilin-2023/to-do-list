@@ -10,6 +10,7 @@
 # other
 #[Ss]ecrets/
 *.log
+ssl/
 
 
 # ide
