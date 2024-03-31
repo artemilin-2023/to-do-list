@@ -6,8 +6,12 @@ services:
     restart: unless-stopped
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_storage:/prometheus
     depends_on:
       - cadvisor
+    networks:
+      - net
+      - default
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
@@ -17,6 +21,9 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - net
+      - default
 
   grafana:
     image: grafana/grafana-oss
@@ -24,20 +31,30 @@ services:
     volumes:
       - grafana_storage:/var/lib/grafana
       - ./grafana/provisioning/datasources/:/etc/grafana/provisioning/datasources
-    ports:
-      - 3000:3000
     depends_on:
       - prometheus
       - loki
+    networks:
+      - net
+      - default
 
   loki:
     image: grafana/loki
     restart: unless-stopped
     environment:
       - TZ="Europe/Moscow"
+    command: -config.file=etc/loki/local-config.yaml
     ports:
       - 3100:3100
-    command: -config.file=etc/loki/local-config.yaml
+    networks:
+      - net
+      - default
 
 volumes:
   grafana_storage:
+  prometheus_storage:
+
+networks:
+  net:
+    external: true
+    name: nginx_net

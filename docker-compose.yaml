@@ -10,9 +10,9 @@ x-logging: &logging
         loki-max-backoff: 1000ms
         loki-timeout: 1s
 
-
 services:
   database:
+    <<: *logging
     image: postgres
     restart: unless-stopped
     environment:
@@ -20,17 +20,28 @@ services:
       POSTGRES_DB: database
     volumes:
       - db_volume:/var/lib/postgresql/data/
-    <<: *logging
 
   server:
+    <<: *logging
     image: artemilin15474/to-do-list:latest
-    build: ./TaskManager/
     restart: unless-stopped
     depends_on:
       - database
-    ports:
-      - 80:8080
-    <<: *logging
+    networks:
+      - net
+      - default
+    deploy:
+      mode: replicated
+      replicas: 2
+      resources:
+        limits:
+          memory: 512M
+
 
 volumes:
   db_volume:
+
+networks:
+  net:
+    external: true
+    name: nginx_net
