@@ -5,7 +5,7 @@ using TaskManager.Application.Services;
 
 namespace TaskManager.API.Controllers
 {
-    [Route("api/v1"), Authorize, ApiController]
+    [Authorize, ApiController]
     public class BoardController : ControllerBase
     {
         private readonly BoardServices boardServices;
@@ -17,7 +17,7 @@ namespace TaskManager.API.Controllers
             this.accountServices = accountServices;
         }
 
-        [HttpPost("/boards/")]
+        [HttpPost("/api/v1/boards/")]
         public async Task<IResult> Create([FromBody] BoardRequest request)
         {
             if (WrongRequest(request))
@@ -33,20 +33,20 @@ namespace TaskManager.API.Controllers
         private bool WrongRequest(BoardRequest request) =>
             request == null || request.Title == null;
 
-        [HttpGet("/boards/{id}")]
+        [HttpGet("/api/v1/boards/{id}")]
         public async Task<IResult> Get(Guid id)
         {
             return Results.Ok(await boardServices.GetAsync(id));
         }
 
-        [HttpGet("/boards/")]
+        [HttpGet("/api/v1/boards/")]
         public IResult GetAll()
         {
             var result = boardServices.GetAll();
             return Results.Ok(result);
         }
 
-        [HttpDelete("/boards/{id}")]
+        [HttpDelete("/api/v1/boards/{id}")]
         public async Task<IResult> Delete(Guid id)
         {
             var token = HttpContext.Request.Cookies["meow"]!;
@@ -56,7 +56,7 @@ namespace TaskManager.API.Controllers
             return Results.Ok();
         }
 
-        [HttpPut("/boards/{id}")]
+        [HttpPut("/api/v1/boards/{id}")]
         public async Task<IResult> Update(Guid id, [FromBody] string newTitle)
         {
             var token = HttpContext.Request.Cookies["meow"]!;
