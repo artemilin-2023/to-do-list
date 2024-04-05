@@ -12,6 +12,10 @@ services:
     networks:
       - net
       - default
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
@@ -24,6 +28,11 @@ services:
     networks:
       - net
       - default
+    deploy:
+      resources:
+        limits:
+          cpus: 0.05
+          memory: 128M
 
   grafana:
     image: grafana/grafana-oss
@@ -37,18 +46,29 @@ services:
     networks:
       - net
       - default
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   loki:
     image: grafana/loki
     restart: unless-stopped
     environment:
       - TZ="Europe/Moscow"
-    command: -config.file=etc/loki/local-config.yaml
+    volumes:
+      - ./loki/retention-config.yaml:/etc/loki/retention-config.yaml
+    command: -config.file=/etc/loki/retention-config.yaml -config.expand-env=true
     ports:
       - 3100:3100
     networks:
       - net
       - default
+    deploy:
+      resources:
+        limits:
+          cpus: 0.1
+          memory: 256M
 
 volumes:
   grafana_storage:
