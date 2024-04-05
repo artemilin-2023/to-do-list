@@ -49,7 +49,7 @@ var app = builder.Build();
 // из под docker-compose файла. “аким образом не требуетс€ примен€ть
 // команду dotnet ef database update и качать дополнительные инструменты.
 var db = app.Services.GetRequiredService<DataContext>();
-await db.Database.MigrateAsync();
+//await db.Database.MigrateAsync();
 
 # region Middlewares
 app.UseSwagger();

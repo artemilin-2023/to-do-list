@@ -34,8 +34,11 @@ namespace TaskManager.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Issue>> GetAllAsync(Guid boardId)
         {
-            var board = await database.Boards.SingleAsync(i => i.Id == boardId);
-            return board.Issues.Select(mapper.Map<Issue>).AsEnumerable();
+            var board = await database.Boards
+                .Include(b => b.Issues)
+                .SingleAsync(b => b.Id == boardId);
+
+            return board.Issues.Select(mapper.Map<Issue>);
         }
 
         public async Task<Issue?> GetAsync(Guid id)
