@@ -41,9 +41,9 @@ namespace TaskManager.Application.Services
             return true;
         }
 
-        public Task<IEnumerable<Issue>> GetAllAsync(Guid boardId)
+        public async Task<IEnumerable<Issue>> GetAllAsync(Guid boardId)
         {
-            return issueRepository.GetAllAsync(boardId);
+            return await issueRepository.GetAllAsync(boardId);
         }
 
         public async Task<Issue> GetAsync(Guid id)
