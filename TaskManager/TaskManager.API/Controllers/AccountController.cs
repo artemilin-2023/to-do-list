@@ -4,7 +4,7 @@ using TaskManager.Application.Services;
 
 namespace TaskManager.API.Controllers
 {
-    [Route("api/v1"), ApiController]
+    [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly AccountServices accountServices;
@@ -15,7 +15,7 @@ namespace TaskManager.API.Controllers
             this.accountServices = accountServices;
         }
 
-        [HttpPost("/signup/")]
+        [HttpPost("/api/v1/signup/")]
         public async Task<IResult> SignUp([FromBody] SignupRequest request)
         {
             if (request == null || request.Username == null || request.Email == null || request.Password == null)
@@ -32,7 +32,7 @@ namespace TaskManager.API.Controllers
             HttpContext.Response.Cookies.Append(CookieName, token);
         }
 
-        [HttpPost("/login/")]
+        [HttpPost("/api/v1/login/")]
         public async Task<IResult> Login([FromBody] LoginRequest request)
         {
             if (request == null || request.Email == null || request.Password == null)
@@ -44,14 +44,14 @@ namespace TaskManager.API.Controllers
             return Results.Ok("log in success");
         }
 
-        [HttpGet("/logout")]
+        [HttpGet("/api/v1/logout")]
         public IResult Logout()
         {
             HttpContext.Response.Cookies.Delete(CookieName);
             return Results.Ok();
         }
 
-        [HttpDelete("/account")]
+        [HttpDelete("/api/v1/account")]
         public async Task<IResult> Delete()
         {
             var userId = accountServices.GetUserId(HttpContext.Request.Cookies[CookieName]!);
