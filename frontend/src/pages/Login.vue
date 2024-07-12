@@ -8,7 +8,12 @@
         type="email"
         label="Почта"
       />
-      <password-input class="q-ma-sm" style="width: 100%" :label="'Пароль'" />
+      <password-input
+        ref="passwordInput"
+        class="q-ma-sm"
+        style="width: 100%"
+        :label="'Пароль'"
+      />
       <q-btn
         style="width: 100%"
         class="q-ma-sm"

@@ -33,7 +33,7 @@ export default {
 
   data() {
     return {
-      path: ref("/auth/login"),
+      path: ref(this.$route.fullPath),
     };
   },
 
