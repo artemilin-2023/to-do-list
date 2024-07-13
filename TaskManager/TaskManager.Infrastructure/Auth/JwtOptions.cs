@@ -8,7 +8,7 @@ namespace TaskManager.Infrastructure.Auth
 {
     public class JwtOptions
     {
-        public string SecretKey { get; set; }
-        public int ExpireHourse { get; set; }
+        public required string SecretKey { get; set; }
+        public int ExpiresHours { get; set; }
     }
 }
