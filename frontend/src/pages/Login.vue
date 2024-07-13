@@ -52,6 +52,7 @@
 
 <script>
 import PasswordInput from "components/PasswordInput.vue";
+import { Cookies } from "quasar";
 import { ref } from "vue";
 
 export default {
@@ -61,6 +62,7 @@ export default {
   data() {
     return {
       email: ref(""),
+      errorMessage: ref(""),
     };
   },
 
@@ -73,8 +75,9 @@ export default {
         })
         .then((result) => {
           if (result.status == 200) {
-            console.log(result);
-            this.$router.push("/home");
+            this.$router.push("/");
+            const cookies = Cookies.getAll();
+            console.log(cookies);
           }
         });
     },

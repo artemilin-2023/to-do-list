@@ -34,10 +34,11 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  Router.beforeEach((to) => {
-    if (to.fullPath.includes("/auth")) return;
+  Router.beforeEach((to, from) => {
+    // if (from.fullPath.includes("auth")) return;
+    if (to.fullPath.includes("auth")) return;
 
-    const token = this.$cookies.get("meow");
+    const token = Cookies.get("meow");
     console.log(token);
     if (token == null || token.length == 0) {
       Router.push("/auth/login");
