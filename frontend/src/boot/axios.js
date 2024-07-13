@@ -10,12 +10,14 @@ import VueCookies from "vue-cookies";
 // for each client)
 const api = axios.create({
   baseURL: "https://todo.lcma.xyz/api/v1",
+  // baseURL: "https://localhost:7004/api/v1",
   headers: {
     "Access-Control-Allow-Headers":
       "Origin, X-Requested-With, Content-Type, Accept",
     Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "http://localhost:9000",
   },
+  withCredentials: false,
 });
 
 export default boot(({ app }) => {

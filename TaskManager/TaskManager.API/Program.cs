@@ -20,6 +20,12 @@ var securityConfigs = new ConfigurationBuilder()
 #region Services registration
 services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 
+services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+});
+
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
@@ -68,7 +74,8 @@ app.UseCors(builder =>
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
-    MinimumSameSitePolicy = SameSiteMode.Strict,
+    MinimumSameSitePolicy = SameSiteMode.None,
+    Secure = CookieSecurePolicy.SameAsRequest,
     HttpOnly = HttpOnlyPolicy.None
 });
 app.UseAuthentication();

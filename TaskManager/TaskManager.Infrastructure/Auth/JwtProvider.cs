@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 using TaskManager.Application.Abstracts.Auth;
@@ -26,8 +27,8 @@ namespace TaskManager.Infrastructure.Auth
                 SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                claims: claim, 
-                expires: DateTime.UtcNow.AddHours(options.ExpiresHours), 
+                claims: claim,
+                expires: DateTime.UtcNow.AddHours(options.ExpiresHours * 24),
                 signingCredentials: creditionals);
 
             var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
