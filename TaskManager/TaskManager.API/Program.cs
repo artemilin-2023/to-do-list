@@ -69,7 +69,7 @@ app.UseCors(builder =>
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Strict,
-    HttpOnly = HttpOnlyPolicy.Always
+    HttpOnly = HttpOnlyPolicy.None
 });
 app.UseAuthentication();
 app.UseAuthorization();
