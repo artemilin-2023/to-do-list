@@ -24,6 +24,8 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+services.AddCors();
+
 services.AddApiAuthentication(securityConfigs);
 services.AddAutoMapper(typeof(MapperProfile));
 services.AddDbContext<DataContext>(options =>
@@ -56,6 +58,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin();
+});
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
