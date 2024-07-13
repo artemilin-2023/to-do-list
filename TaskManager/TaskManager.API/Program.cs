@@ -61,6 +61,8 @@ app.UseHttpsRedirection();
 
 app.UseCors(builder =>
 {
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
     builder.AllowAnyOrigin();
 });
 
