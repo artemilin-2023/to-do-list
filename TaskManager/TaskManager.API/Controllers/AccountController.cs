@@ -9,6 +9,11 @@ namespace TaskManager.API.Controllers
     {
         private readonly AccountServices accountServices;
         private const string CookieName = "meow";
+        private readonly CookieOptions cookieOptions = new()
+        {
+            Expires = DateTime.UtcNow.AddDays(30),
+            IsEssential = true,
+        };
 
         public AccountController(AccountServices accountServices)
         {
@@ -29,7 +34,7 @@ namespace TaskManager.API.Controllers
 
         private void SetToken(string token)
         {
-            HttpContext.Response.Cookies.Append(CookieName, token);
+            HttpContext.Response.Cookies.Append(CookieName, token, cookieOptions);
         }
 
         [HttpPost("/api/v1/login/")]

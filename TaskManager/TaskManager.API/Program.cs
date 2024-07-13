@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.Internal;
 using TaskManager.API.Exstensios;
 using TaskManager.Application.Abstracts.Auth;
 using TaskManager.Application.Abstracts.Repositories;
@@ -23,14 +24,27 @@ services.Configure<JwtOptions>(securityConfigs.GetSection(nameof(JwtOptions)));
 services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+    options.Cookie.MaxAge = TimeSpan.FromDays(30);
 });
+
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
-services.AddCors();
+services.AddCors(options =>
+{
+    options.AddPolicy(
+        options.DefaultPolicyName,
+        policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.WithOrigins("http://localhost:9000", "https://localhost:9000", "https://todo.lcma.xyz");
+        policy.AllowCredentials();
+        policy.WithExposedHeaders("Set-Cookie");
+    });
+});
 
 services.AddApiAuthentication(securityConfigs);
 services.AddAutoMapper(typeof(MapperProfile));
@@ -64,20 +78,17 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+app.UseRouting();
 
-app.UseCors(builder =>
-{
-    builder.AllowAnyHeader();
-    builder.AllowAnyMethod();
-    builder.AllowAnyOrigin();
-});
+app.UseCors();
 
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.None,
-    Secure = CookieSecurePolicy.SameAsRequest,
+    Secure = CookieSecurePolicy.Always,
     HttpOnly = HttpOnlyPolicy.None
 });
+
 app.UseAuthentication();
 app.UseAuthorization();
 

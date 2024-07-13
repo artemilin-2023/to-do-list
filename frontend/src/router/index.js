@@ -39,9 +39,10 @@ export default route(function (/* { store, ssrContext } */) {
     if (to.fullPath.includes("auth")) return;
 
     const token = Cookies.get("meow");
-    console.log(token);
     if (token == null || token.length == 0) {
       Router.push("/auth/login");
+    } else if (to.fullPath.includes("auth")) {
+      Router.push(from.fullPath);
     }
   });
 

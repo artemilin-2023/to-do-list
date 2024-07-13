@@ -1,6 +1,5 @@
 import { boot } from "quasar/wrappers";
 import axios from "axios";
-import VueCookies from "vue-cookies";
 
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
@@ -11,13 +10,7 @@ import VueCookies from "vue-cookies";
 const api = axios.create({
   baseURL: "https://todo.lcma.xyz/api/v1",
   // baseURL: "https://localhost:7004/api/v1",
-  headers: {
-    "Access-Control-Allow-Headers":
-      "Origin, X-Requested-With, Content-Type, Accept",
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "http://localhost:9000",
-  },
-  withCredentials: false,
+  withCredentials: true,
 });
 
 export default boot(({ app }) => {

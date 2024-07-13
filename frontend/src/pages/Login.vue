@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div>
-      <q-form class="flex flex-center" @submit="login()">
+      <q-form class="flex flex-center" @submit="login">
         <q-input
           class="q-ma-sm"
           style="width: 100%"
@@ -34,7 +34,6 @@
           class="q-ma-sm"
           color="primary"
           label="Войти"
-          @click="login()"
         />
 
         <q-btn
@@ -75,9 +74,9 @@ export default {
         })
         .then((result) => {
           if (result.status == 200) {
-            this.$router.push("/");
             const cookies = Cookies.getAll();
             console.log(cookies);
+            this.$router.push("/");
           }
         });
     },
