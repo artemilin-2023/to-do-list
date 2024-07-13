@@ -24,6 +24,8 @@ services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
+services.AddCors();
+
 services.AddApiAuthentication(securityConfigs);
 services.AddAutoMapper(typeof(MapperProfile));
 services.AddDbContext<DataContext>(options =>
@@ -57,10 +59,17 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyHeader();
+    builder.AllowAnyMethod();
+    builder.AllowAnyOrigin();
+});
+
 app.UseCookiePolicy(new CookiePolicyOptions
 {
     MinimumSameSitePolicy = SameSiteMode.Strict,
-    HttpOnly = HttpOnlyPolicy.Always
+    HttpOnly = HttpOnlyPolicy.None
 });
 app.UseAuthentication();
 app.UseAuthorization();
