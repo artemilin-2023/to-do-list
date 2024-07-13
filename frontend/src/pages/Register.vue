@@ -17,14 +17,20 @@
             $rules.required('Почта обязательна для заполнения.'),
             $rules.email('Пожалуйста, введите настоящую почту.'),
           ]"
-        />
+        >
+          <template v-slot:prepend> <q-icon name="mail_outline" /> </template
+        ></q-input>
         <q-input
           style="width: 100%"
           v-model="nickname"
           type="nickname"
           label="Никнейм"
           :rules="[$rules.required('Никнейм обязателен для заполнения.')]"
-        />
+        >
+          <template v-slot:prepend>
+            <q-icon name="person_outline" />
+          </template>
+        </q-input>
         <password-input
           ref="password"
           style="width: 100%"

@@ -12,8 +12,8 @@ const routes = [
     path: "/auth",
     component: Authorize,
     children: [
-      { path: "", alias: "login", component: Login },
-      { path: "", alias: "register", component: Register },
+      { path: "/auth/login", alias: "/auth", component: Login },
+      { path: "/auth/register", component: Register },
     ],
   },
 

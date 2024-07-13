@@ -8,17 +8,25 @@
           v-model="email"
           type="email"
           label="Почта"
+          lazy-rules
           :rules="[
             $rules.required('Почта обязательна для заполнения.'),
             $rules.email('Пожалуйста, введите настоящую почту.'),
           ]"
-        />
+        >
+          <template v-slot:prepend>
+            <q-icon name="mail_outline" />
+          </template>
+        </q-input>
         <password-input
           ref="passwordInput"
           class="q-ma-sm"
           style="width: 100%"
           :label="'Пароль'"
-          :rules="[$rules.required('Пароль обязателен для заполнения.')]"
+          :rules="[
+            $rules.required('Пароль обязателен для заполнения.'),
+            $rules.minLength(6, 'Пароль слишком короткий.'),
+          ]"
         />
         <q-btn
           style="width: 100%"
@@ -44,6 +52,7 @@
 
 <script>
 import PasswordInput from "components/PasswordInput.vue";
+import { Axios } from "axios";
 import { ref } from "vue";
 
 export default {
@@ -57,7 +66,16 @@ export default {
   },
 
   methods: {
-    login() {},
+    login() {
+      this.$api
+        .post("login", {
+          email: this.email,
+          password: this.$refs.passwordInput.password,
+        })
+        .then((result) => {
+          console.log(result);
+        });
+    },
   },
 };
 </script>
