@@ -52,7 +52,6 @@
 
 <script>
 import PasswordInput from "components/PasswordInput.vue";
-import { Axios } from "axios";
 import { ref } from "vue";
 
 export default {
@@ -73,7 +72,10 @@ export default {
           password: this.$refs.passwordInput.password,
         })
         .then((result) => {
-          console.log(result);
+          if (result.status == 200) {
+            console.log(result);
+            this.$router.push("/home");
+          }
         });
     },
   },

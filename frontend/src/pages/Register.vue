@@ -109,7 +109,15 @@ export default {
     },
 
     register() {
-      console.log("reg");
+      this.$api
+        .post("signup", {
+          username: this.nickname,
+          password: this.$refs.password.password,
+          email: this.email,
+        })
+        .then((result) => {
+          if (result.status == 200) this.$router.push("/");
+        });
     },
   },
 };
