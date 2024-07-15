@@ -27,9 +27,16 @@
 
 <script>
 import { ref } from "vue";
+import { useQuasar } from "quasar";
 
 export default {
   name: "AuthorizeLayout",
+
+  setup() {
+    const $q = useQuasar();
+    var theme = localStorage.getItem("theme") === "true";
+    $q.dark.set(theme);
+  },
 
   data() {
     return {

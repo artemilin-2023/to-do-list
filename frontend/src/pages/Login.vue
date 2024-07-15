@@ -30,6 +30,8 @@
         />
         <q-btn
           style="width: 100%"
+          :loading="isLoading"
+          :disable="isLoading"
           type="submit"
           class="q-ma-sm"
           color="primary"
@@ -62,11 +64,13 @@ export default {
     return {
       email: ref(""),
       errorMessage: ref(""),
+      isLoading: ref(false),
     };
   },
 
   methods: {
     login() {
+      this.isLoading = ref(true);
       this.$api
         .post("login", {
           email: this.email,
@@ -78,6 +82,7 @@ export default {
             console.log(cookies);
             this.$router.push("/");
           }
+          this.isLoading = ref(false);
         });
     },
   },
