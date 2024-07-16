@@ -1,5 +1,6 @@
 <template>
   <q-input
+    no-error-icon
     v-model="password"
     :type="isPwd ? 'password' : 'text'"
     :label="label"
