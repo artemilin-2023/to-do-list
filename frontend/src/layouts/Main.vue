@@ -12,7 +12,13 @@
 
         <q-toolbar-title>ToDone</q-toolbar-title>
 
-        <q-btn-dropdown unelevated flat rounded icon="account_circle">
+        <q-btn-dropdown
+          ref="account"
+          unelevated
+          flat
+          rounded
+          icon="account_circle"
+        >
           <q-list>
             <q-item clickable v-ripple>
               <q-item-section avatar>
@@ -85,24 +91,11 @@
           <q-item
             clickable
             v-ripple
-            :active="currentPage === 'my-tasks'"
-            @click="swapPage('my-tasks')"
+            :active="currentPage === 'add-board'"
+            @click="swapPage('add-board')"
           >
-            <q-item-section avatar>
-              <q-icon name="checklist" />
-            </q-item-section>
-            <q-item-section no-wrap>Мои дела</q-item-section>
-          </q-item>
-          <q-item
-            clickable
-            v-ripple
-            :active="currentPage === 'group-tasks'"
-            @click="swapPage('group-tasks')"
-          >
-            <q-item-section avatar>
-              <q-icon name="group" />
-            </q-item-section>
-            <q-item-section no-wrap>Совместные дела</q-item-section>
+            <q-item-section avatar> <q-icon name="add" /> </q-item-section>
+            <q-item-section>Добавить доску</q-item-section>
           </q-item>
           <q-item
             clickable
@@ -150,6 +143,7 @@ export default {
       showSidePanel: ref(false),
       miniState: ref(true),
       currentPage: ref("home"),
+      showAccount: ref(false),
     };
   },
   methods: {
