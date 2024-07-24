@@ -24,11 +24,15 @@
         />
         <q-separator inset class="q-ma-xs" />
         <div class="row">
-          <q-skeleton v-for="i in 3" :key="i" type="QChip" class="q-ma-sm" />
+          <q-skeleton
+            v-for="i in Math.floor(Math.random() * 4) + 1"
+            :key="i"
+            type="QChip"
+            class="q-ma-sm"
+          />
         </div>
       </div>
       <div class="column" style="flex: 1 1 15%">
-        <q-skeleton type="QButton" class="col q-ma-md" />
         <q-skeleton type="QButton" class="col q-ma-md" />
       </div>
     </q-card>

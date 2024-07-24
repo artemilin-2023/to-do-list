@@ -6,8 +6,10 @@
       v-on:click="openBoard()"
     >
       <q-card-section>
-        <div class="text-h6">{{ board.name }}</div>
-        <div class="description text-subtitle1">
+        <div class="text text-h6" style="max-width: 300px">
+          {{ board.name }}
+        </div>
+        <div class="text text-subtitle1" style="max-width: 200px">
           {{ board.description }}
         </div>
       </q-card-section>
@@ -52,8 +54,7 @@ export default {
 </script>
 
 <style>
-.description {
-  max-width: 200px;
+.text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

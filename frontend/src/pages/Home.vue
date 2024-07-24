@@ -70,17 +70,14 @@
           />
         </q-expansion-item>
       </div>
-      <div class="row q-ma-md q-gutter-md">
-        <div v-if="!isLoad" class="row q-gutter-md">
-          <board-skeleton v-for="i in 20" :key="i" style="flex: 1 1 25%" />
+
+      <div v-if="!isLoad" class="row q-ma-md q-gutter-md">
+        <div v-for="i in 20" :key="i" style="flex: 1 1 25%">
+          <board-skeleton />
         </div>
-        <div
-          v-else
-          style="flex: 1 1 25%"
-          v-for="board in boards"
-          :key="board"
-          class="task-item"
-        >
+      </div>
+      <div v-else class="row q-ma-md q-gutter-md">
+        <div style="flex: 1 1 25%" v-for="board in boards" :key="board">
           <board-item :board="board" />
         </div>
       </div>
