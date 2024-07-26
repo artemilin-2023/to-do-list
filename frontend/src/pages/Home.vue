@@ -13,7 +13,77 @@
           </template>
         </q-input>
       </div>
-      <div class="row q-gutter-md no-wrap">
+
+      <div class="mobile-only column q-gutter-sm">
+        <q-expansion-item expand-separator icon="filter_alt" label="Фильтрация">
+          <q-expansion-item
+            class="q-mx-md"
+            icon="format_list_bulleted"
+            label="Тип задачи"
+          >
+            <q-option-group
+              v-model="taskType"
+              type="radio"
+              color="secondary"
+              :options="[
+                { label: 'Все', value: 'allTasks' },
+                { label: 'Личные', value: 'privateTasks' },
+                { label: 'Совместные', value: 'publicTasks' },
+              ]"
+            />
+          </q-expansion-item>
+          <tags-filter class="q-mx-md" />
+          <q-expansion-item
+            class="q-mx-md"
+            icon="date_range"
+            label="Период создания"
+          >
+            <div>
+              <q-date
+                :first-day-of-week="1"
+                today-btn
+                flat
+                v-model="range"
+                range
+              />
+            </div>
+          </q-expansion-item>
+        </q-expansion-item>
+        <q-expansion-item expand-separator icon="sort" label="Сортировка">
+          <q-expansion-item
+            class="q-mx-md"
+            icon="low_priority"
+            label="Направление"
+          >
+            <q-option-group
+              v-model="sortDerection"
+              type="radio"
+              color="secondary"
+              :options="[
+                { label: 'По убыванию', value: false },
+                { label: 'По возрастанию', value: true },
+              ]"
+            />
+          </q-expansion-item>
+          <q-expansion-item
+            class="q-mx-md"
+            icon="sort_by_alpha"
+            label="Сортировать по"
+          >
+            <q-option-group
+              v-model="sortKey"
+              type="radio"
+              color="secondary"
+              :options="[
+                { label: 'Названию', value: 'title' },
+                { label: 'Дате создания', value: 'createdDate' },
+              ]"
+            />
+          </q-expansion-item>
+        </q-expansion-item>
+      </div>
+
+      <div class="desktop-only row q-gutter-md no-wrap">
         <q-expansion-item
           class="col"
           icon="format_list_bulleted"
@@ -31,7 +101,8 @@
             ]"
           />
         </q-expansion-item>
-        <q-expansion-item class="col" icon="date_range" label="Период">
+        <tags-filter class="col" />
+        <q-expansion-item class="col" icon="date_range" label="Период создания">
           <div class="row">
             <q-date
               class="col"
@@ -91,10 +162,11 @@ import BoardItem from "src/components/BoardItem.vue";
 import { Board } from "src/api/DTOs/Board";
 import Tags from "src/api/enums/Tags";
 import BoardSkeleton from "src/components/BoardSkeleton.vue";
+import TagsFilter from "src/components/TagsFilter.vue";
 
 export default {
   name: "HomePage",
-  components: { BoardItem, BoardSkeleton },
+  components: { BoardItem, BoardSkeleton, TagsFilter },
 
   beforeMount() {
     this.getBoards();

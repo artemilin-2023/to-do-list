@@ -54,7 +54,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-footer reveal class="flex flex-center">
+    <q-footer reveal class="row justify-center">
       <div>
         <font color="#E4E4F6">made with</font>
         <q-icon class="q-ml-xs q-mr-xs" name="favorite" color="red"></q-icon>

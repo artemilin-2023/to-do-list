@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="column" style="flex: 1 1 15%">
-        <q-skeleton type="QButton" class="col q-ma-md" />
+        <q-skeleton type="rect" class="col q-ma-md" />
       </div>
     </q-card>
   </div>
