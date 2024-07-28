@@ -1,7 +1,31 @@
 <template>
   <q-expansion-item icon="tag" label="Теги">
     <div class="row">
-      <tag-item v-for="tag in this.tags" :key="tag" :tag="tag" />
+      <tag-item
+        v-for="tag in this.tags"
+        ref="tag"
+        :key="tag"
+        :tag="tag"
+        @toggle-tag="updateTagList($event)"
+      />
+      <q-chip
+        :icon="this.selectedTags.length == 0 ? 'add' : 'clear_all'"
+        :label="this.selectedTags.length == 0 ? 'Выбрать все' : 'Отчистить'"
+        style="order: 1"
+        clickable
+        @click="
+          () => {
+            add = this.selectedTags.length == 0;
+            this.$refs.tag.forEach((tag) => {
+              if (add) {
+                tag.add();
+              } else {
+                tag.clear();
+              }
+            });
+          }
+        "
+      />
     </div>
   </q-expansion-item>
 </template>
@@ -26,6 +50,15 @@ export default {
     return {
       selectedTags: ref([]),
     };
+  },
+  methods: {
+    updateTagList(tagEvent) {
+      if (tagEvent.state) {
+        this.selectedTags.push(tagEvent.tag);
+      } else {
+        this.selectedTags.splice(this.selectedTags.indexOf(tagEvent.tag), 1);
+      }
+    },
   },
 };
 </script>
