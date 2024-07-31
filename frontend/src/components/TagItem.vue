@@ -7,7 +7,7 @@
     :label="tag.label"
     :color="tag.color"
     clickable
-    @click="toggle()"
+    @click="toggle(!isSelected)"
     :style="{
       order: isSelected ? -1 : 0,
     }"
@@ -29,9 +29,15 @@ export default {
     };
   },
   methods: {
-    toggle() {
-      this.isSelected = !this.isSelected;
-      console.log(this.isSelected);
+    toggle(mode) {
+      this.isSelected = mode;
+      this.$emit("toggleTag", { tag: this.tag, state: this.isSelected });
+    },
+    add() {
+      this.toggle(true);
+    },
+    clear() {
+      this.toggle(false);
     },
   },
 };
