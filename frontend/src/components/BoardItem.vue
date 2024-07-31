@@ -27,27 +27,63 @@
       </q-card-section>
     </div>
     <div class="column justify-center" style="flex: 1 1 15%">
-      <!-- <q-btn class="col" flat color="accent" icon="open_in_new">
-        <q-tooltip>Перейти к доске</q-tooltip>
-      </q-btn> -->
-      <q-btn class="col" flat color="red" icon="delete">
+      <q-btn
+        class="col"
+        flat
+        color="red"
+        icon="delete"
+        @click="this.deleteConfirmation = true"
+      >
         <q-tooltip label="Flip">Удалить</q-tooltip>
       </q-btn>
     </div>
   </q-card>
+
+  <q-dialog v-model="deleteConfirmation" persistent>
+    <q-card>
+      <q-card-section class="row items-center">
+        <q-avatar icon="delete" color="primary" text-color="white" />
+        <span class="col q-ml-sm">
+          Вы уверены, что хотите <strong>безвозвратно удалить</strong> доску и
+          все связанные с ней задачи?
+        </span>
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn flat label="Отменить" color="primary" v-close-popup />
+        <q-btn
+          flat
+          label="Удалить"
+          color="red"
+          v-close-popup
+          @click="deleteBoard()"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 import { Board } from "src/api/DTOs/Board";
+import { ref } from "vue";
+import BoardApi from "src/api/boardApi";
 
 export default {
   name: "BoardItem",
   props: {
     board: Board,
   },
+  data() {
+    return {
+      deleteConfirmation: ref(false),
+    };
+  },
   methods: {
     openBoard() {
       this.$router.push(`/boards/${this.board.id}`);
+    },
+    async deleteBoard() {
+      const boardApi = new BoardApi(this.$api);
+      console.log(await boardApi.delete(this.board.id));
     },
   },
 };

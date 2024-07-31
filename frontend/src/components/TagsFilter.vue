@@ -1,9 +1,6 @@
 <template>
   <q-expansion-item icon="tag" label="Теги">
     <div class="row">
-      <<<<<<< HEAD
-      <tag-item v-for="tag in this.tags" :key="tag" :tag="tag" />
-      =======
       <tag-item
         v-for="tag in this.tags"
         ref="tag"
@@ -29,7 +26,6 @@
           }
         "
       />
-      >>>>>>> 33d2d9f99621ea73c48b2bca5b02d8e91728dc5e
     </div>
   </q-expansion-item>
 </template>
