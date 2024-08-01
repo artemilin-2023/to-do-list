@@ -112,6 +112,8 @@
       </q-scroll-area>
     </q-drawer>
 
+    <accept-cookies-banner :show="this.getCookieStatus()" />
+
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -120,10 +122,12 @@
 
 <script>
 import { useQuasar } from "quasar";
+import AcceptCookiesBanner from "src/components/AcceptCookiesBanner.vue";
 import { ref } from "vue";
 
 export default {
   name: "MainLayout",
+  components: { AcceptCookiesBanner },
 
   beforeMount() {
     this.currentPage = this.$route.fullPath;
@@ -142,7 +146,14 @@ export default {
       localStorage.setItem("theme", $q.dark.isActive);
     }
 
-    return { changTheme };
+    function getCookieStatus() {
+      console.log(localStorage);
+      return localStorage.getItem("acceptCookies") != null
+        ? localStorage.getItem("acceptCookies") === "false"
+        : true;
+    }
+
+    return { changTheme, getCookieStatus };
   },
 
   data() {

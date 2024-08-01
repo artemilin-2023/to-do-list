@@ -65,7 +65,7 @@
 <script>
 import { Board } from "src/api/DTOs/Board";
 import { ref } from "vue";
-import BoardApi from "src/api/boardApi";
+import BoardApi from "src/api/BoardApi";
 
 export default {
   name: "BoardItem",
