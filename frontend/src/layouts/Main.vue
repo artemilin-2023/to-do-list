@@ -56,9 +56,9 @@
 
     <q-footer reveal class="row justify-center">
       <div>
-        <font color="#E4E4F6">made with</font>
+        <span>made with</span>
         <q-icon class="q-ml-xs q-mr-xs" name="favorite" color="red"></q-icon>
-        <font color="#E4E4F6">by</font>
+        <span>by</span>
         <q-icon
           class="q-ml-xs q-mr-xs"
           name="fa-solid fa-frog"
@@ -82,8 +82,8 @@
           <q-item
             clickable
             v-ripple
-            :active="currentPage === 'home'"
-            @click="swapPage('home')"
+            :active="currentPage === '/home'"
+            @click="swapPage('/home')"
           >
             <q-item-section avatar> <q-icon name="home" /> </q-item-section>
             <q-item-section>Главная</q-item-section>
@@ -91,8 +91,8 @@
           <q-item
             clickable
             v-ripple
-            :active="currentPage === 'add-board'"
-            @click="swapPage('add-board')"
+            :active="currentPage === '/boards/new'"
+            @click="swapPage('/boards/new')"
           >
             <q-item-section avatar> <q-icon name="add" /> </q-item-section>
             <q-item-section>Добавить доску</q-item-section>
@@ -100,8 +100,8 @@
           <q-item
             clickable
             v-ripple
-            :active="currentPage === 'friends'"
-            @click="swapPage('friends')"
+            :active="currentPage === '/friends'"
+            @click="swapPage('/friends')"
           >
             <q-item-section avatar>
               <q-icon name="diversity_3" />
@@ -124,6 +124,13 @@ import { ref } from "vue";
 
 export default {
   name: "MainLayout",
+
+  beforeMount() {
+    this.currentPage = this.$route.fullPath;
+  },
+  updated() {
+    this.currentPage = this.$route.fullPath;
+  },
 
   setup() {
     const $q = useQuasar();
@@ -149,7 +156,6 @@ export default {
   methods: {
     swapPage(page) {
       this.$router.push(page);
-      this.currentPage = page;
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
   <q-page padding>
     <div class="column">
-      <advertisement-block
+      <!-- <advertisement-block
         :block-id="'R-A-10819221-1'"
         :render-to="'yandex_rtb_R-A-10819221-1'"
-      />
+      /> -->
       <div class="row">
         <q-input
           v-on:keydown.enter="getBoards()"
@@ -31,22 +31,22 @@
 
       <div class="mobile-only column q-gutter-sm">
         <q-expansion-item expand-separator icon="filter_alt" label="Фильтрация">
-          <board-type-picker ref="type-picker" class="q-mx-md" />
-          <tags-filter ref="tags-picker" class="q-mx-md" />
-          <date-range-picker ref="date-range-picker" class="q-mx-md" />
+          <board-type-picker ref="typePicker" class="q-mx-md" />
+          <tags-filter ref="tagsPicker" class="q-mx-md" />
+          <date-range-picker ref="dateRangePicker" class="q-mx-md" />
         </q-expansion-item>
         <q-expansion-item expand-separator icon="sort" label="Сортировка">
-          <sort-direction-picker ref="sort-direction-picker" class="q-mx-md" />
-          <order-by-picker ref="order-by-picker" class="q-mx-md" />
+          <sort-direction-picker ref="sortDirectionPicker" class="q-mx-md" />
+          <order-by-picker ref="orderByPicker" class="q-mx-md" />
         </q-expansion-item>
       </div>
 
       <div class="desktop-only row q-gutter-md no-wrap">
-        <board-type-picker ref="type-picker" class="col" />
-        <tags-filter ref="tags-picker" class="col" />
-        <date-range-picker ref="date-range-picker" class="col" />
-        <sort-direction-picker ref="sort-direction-picker" class="col" />
-        <order-by-picker ref="order-by-picker" class="col" />
+        <board-type-picker ref="typePicker" class="col" />
+        <tags-filter ref="tagsPicker" class="col" />
+        <date-range-picker ref="dateRangePicker" class="col" />
+        <sort-direction-picker ref="sortDirectionPicker" class="col" />
+        <order-by-picker ref="orderByPicker" class="col" />
       </div>
 
       <div v-if="!isLoad" class="row q-ma-md">
@@ -55,15 +55,27 @@
         </div>
       </div>
       <div v-else class="row q-ma-md">
-        <div
-          class="q-ma-md"
-          style="flex: 1 0 25%"
-          v-for="board in boards"
-          :key="board"
-        >
-          <board-item :board="board" />
+        <div v-if="this.boards.length > 0">
+          <div
+            class="q-ma-md"
+            style="flex: 1 0 25%"
+            v-for="board in boards"
+            :key="board"
+          >
+            <board-item :board="board" />
+          </div>
         </div>
+        <q-btn
+          v-else
+          style="flex: 1"
+          color="primary"
+          icon="add"
+          label="Добавить новую доску."
+          to="/boards/new"
+        />
       </div>
+
+      <error-dialog :message="errorMesage" :showDialog="hasError" />
     </div>
   </q-page>
 </template>
@@ -79,6 +91,7 @@ import SortDirectionPicker from "src/components/SortDirectionPicker.vue";
 import BoardTypePicker from "src/components/BoardTypePicker.vue";
 import BoardApi from "src/api/BoardApi";
 import AdvertisementBlock from "src/components/AdvertisementBlock.vue";
+import ErrorDialog from "src/components/ErrorDialog.vue";
 
 export default {
   name: "HomePage",
@@ -90,24 +103,26 @@ export default {
     DateRangePicker,
     OrderByPicker,
     SortDirectionPicker,
-    AdvertisementBlock,
+    ErrorDialog,
+    // AdvertisementBlock,
   },
 
-  beforeMount() {
+  mounted() {
     this.boardApi = new BoardApi(this.$api);
+    this.getBoards();
   },
 
   setup() {
     const typePicker = ref();
-    const tagPicker = ref();
-    const dateRagePicker = ref();
+    const tagsPicker = ref();
+    const dateRangePicker = ref();
     const sortDirectonPicker = ref();
     const orderByPicker = ref();
 
     return {
       typePicker,
-      tagPicker,
-      dateRagePicker,
+      tagsPicker,
+      dateRangePicker,
       sortDirectonPicker,
       orderByPicker,
     };
@@ -118,15 +133,29 @@ export default {
       isLoad: ref(false),
       boards: ref([]),
       search: ref(""),
+      errorMesage: ref(""),
+      hasError: ref(false),
     };
   },
   methods: {
     async getBoards() {
       this.isLoad = false;
-      console.log("here");
-      console.log(this.typePicker);
-      // this.boards = await this.boardApi.getAll();
-      this.isLoad = true;
+      const response = await this.boardApi.getAll(
+        this.search,
+        this.tagsPicker.selectedTags,
+        this.dateRangePicker.range,
+        this.typePicker.type
+      );
+
+      if (response.isSuccess) {
+        this.boards = response.data;
+        this.isLoad = true;
+      } else {
+        this.errorMesage = response.errorMesage
+          ? response.errorMesage
+          : "Непредвиденная ошибка сервера.";
+        this.hasError = true;
+      }
     },
   },
 };

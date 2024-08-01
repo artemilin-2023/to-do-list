@@ -13,7 +13,7 @@ const routes = [
     component: Main,
     children: [
       { path: "/", alias: ["/home", "/"], component: Home },
-      { path: "/add-board", component: AddBoard },
+      { path: "/boards/new", component: AddBoard },
       { path: "/friends", component: Friends },
     ],
   },

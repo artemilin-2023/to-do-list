@@ -1,8 +1,8 @@
 export default class RequsetResult {
-  constructor(statusCode, message, responseData) {
+  constructor(statusCode, responseData, errorMessage = null) {
     this._isSuccess = this.in200Range(statusCode);
-    this._message = message;
     this._responseData = responseData;
+    this._errorMessage = errorMessage;
   }
 
   get isSuccess() {
@@ -13,8 +13,12 @@ export default class RequsetResult {
     return this._message;
   }
 
-  get responseData() {
+  get data() {
     return this._responseData;
+  }
+
+  get errorMessage() {
+    return this._errorMessage;
   }
 
   in200Range(statusCode) {

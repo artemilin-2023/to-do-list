@@ -1,3 +1,4 @@
+import { Board } from "./DTOs/Board";
 import RequsetResult from "./DTOs/RequsetResult";
 
 export default class BoardApi {
@@ -5,9 +6,9 @@ export default class BoardApi {
     this.api = axiosInstance;
   }
 
-  getAll(search, tags, dateRange, boardType) {
+  async getAll(search, tags, dateRange, boardType) {
     let result;
-    this.api
+    await this.api
       .get("/boards/", {
         params: {
           search: search,
@@ -18,14 +19,27 @@ export default class BoardApi {
         },
       })
       .then((response) => {
-        result = new RequsetResult(
-          response.status,
-          response.data.message,
-          response.data
-        );
+        let data = [];
+        for (let i = 0; i < response.data.count; i++) {
+          let item = response.data.data[i];
+          data.push(
+            new Board(
+              item.id,
+              item.title,
+              item.description,
+              item.createdAt,
+              item.tags
+            )
+          );
+        }
+        result = new RequsetResult(response.status, data);
       })
       .catch((error) => {
-        console.log(error);
+        result = new RequsetResult(
+          error.response.status,
+          error.response.data,
+          error.response.data.errorMessage
+        );
       });
     return result;
   }

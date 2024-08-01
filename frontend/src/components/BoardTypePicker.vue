@@ -1,7 +1,7 @@
 <template>
   <q-expansion-item icon="format_list_bulleted" label="Тип доски">
     <q-option-group
-      v-model="taskType"
+      v-model="type"
       type="radio"
       color="secondary"
       :options="[
@@ -20,7 +20,7 @@ export default {
   name: "BoardTypePicker",
   data() {
     return {
-      taskType: ref("allTasks"),
+      type: ref("allTasks"),
     };
   },
 };
