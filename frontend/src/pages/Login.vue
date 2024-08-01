@@ -80,7 +80,7 @@ export default {
             console.log(cookies);
             this.$router.push("/");
           }
-          this.isLoading = ref(false);
+          this.isLoading = false;
         });
     },
   },
