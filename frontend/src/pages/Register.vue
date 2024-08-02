@@ -20,7 +20,7 @@
       ></q-input>
       <q-input
         v-model="nickname"
-        type="nickname"
+        type="text"
         label="Никнейм"
         :rules="[$rules.required('Никнейм обязателен для заполнения.')]"
       >
@@ -47,6 +47,19 @@
           ),
         ]"
       />
+
+      <q-item class="row">
+        <q-item-section avatar>
+          <q-checkbox v-model="acceptPolicy" />
+        </q-item-section>
+        <q-item-section class="col">
+          <span>
+            Нажимая, вы принимаете
+            <a href="/policy">Политику обработки персональных данных</a>
+          </span>
+        </q-item-section>
+      </q-item>
+
       <q-btn
         class="q-mt-sm"
         type="submit"
@@ -65,7 +78,6 @@
 </template>
 
 <script>
-import { email } from "@vuelidate/validators";
 import PasswordInput from "src/components/PasswordInput.vue";
 import { ref } from "vue";
 
@@ -77,6 +89,7 @@ export default {
     return {
       email: ref(""),
       nickname: ref(""),
+      acceptPolicy: ref(false),
     };
   },
 

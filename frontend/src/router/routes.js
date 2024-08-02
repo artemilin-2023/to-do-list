@@ -6,6 +6,7 @@ import Main from "src/layouts/Main.vue";
 import Authorize from "src/layouts/Authorize.vue";
 import Login from "src/pages/Login.vue";
 import Register from "src/pages/Register.vue";
+import PolicyPage from "src/pages/PolicyPage.vue";
 
 const routes = [
   {
@@ -15,6 +16,7 @@ const routes = [
       { path: "/", alias: ["/home", "/"], component: Home },
       { path: "/boards/new", component: AddBoard },
       { path: "/friends", component: Friends },
+      { path: "/policy", component: PolicyPage },
     ],
   },
   {
