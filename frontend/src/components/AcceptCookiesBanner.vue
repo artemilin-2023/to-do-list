@@ -3,10 +3,10 @@
     <q-card>
       <q-card-section class="row items-center">
         <q-avatar icon="cookie" color="primary" text-color="white" />
-        <span class="col q-ml-sm"
-          >Продолжая пользоваться сайтом, вы даете разрешение на использование
-          файлов Cookie</span
-        >
+        <span class="col q-ml-sm">
+          Продолжая пользоваться сайтом, вы принимаете
+          <a href="/policy#cookie">Политику файлов Cookie</a>
+        </span>
       </q-card-section>
       <q-card-actions align="right">
         <q-btn

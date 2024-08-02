@@ -55,7 +55,7 @@
         <q-item-section class="col">
           <span>
             Нажимая, вы принимаете
-            <a href="/policy">Политику обработки персональных данных</a>
+            <a href="/policy#privacy">Политику обработки персональных данных</a>
           </span>
         </q-item-section>
       </q-item>

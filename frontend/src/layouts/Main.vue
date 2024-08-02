@@ -147,10 +147,9 @@ export default {
     }
 
     function getCookieStatus() {
-      console.log(localStorage);
       return localStorage.getItem("acceptCookies") != null
         ? localStorage.getItem("acceptCookies") === "false"
-        : true;
+        : this.$route.fullPath == "/home" || this.$route.fullPath == "/";
     }
 
     return { changTheme, getCookieStatus };
