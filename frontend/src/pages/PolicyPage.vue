@@ -1,12 +1,157 @@
 <template>
   <q-page>
+    <q-card class="q-ma-md column" id="tableOfContent">
+      <q-list bordered>
+        <q-expansion-item
+          expand-separator
+          label="Оглавление"
+          class="column text-h4"
+          default-opened
+          :content-inset-level="1"
+        >
+          <q-expansion-item
+            class="text-h5"
+            label="Политика в отношении обработки персональных данных"
+            :content-inset-level="1"
+          >
+            <q-item clickable @click="scrollTo('general-provisions')">
+              <q-item-section>
+                <span>1. Общие положения</span>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="scrollTo('basic-concepts')">
+              <q-item-section>
+                <span>2. Основные понятия, используемые в Политике</span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('rights-and-obligations-of-the-operator')"
+            >
+              <q-item-section>
+                <span>3. Основные права и обязанности Оператора</span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('rights-and-obligations-of-the-data-subject')"
+            >
+              <q-item-section>
+                <span>
+                  4. Основные права и обязанности субъектов персональных данных
+                </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('principles-of-personal-data-processing')"
+            >
+              <q-item-section>
+                <span> 5. Принципы обработки персональных данных </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('purposes-of-personal-data-processing')"
+            >
+              <q-item-section>
+                <span> 6. Цели обработки персональных данных </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('terms-of-personal-data-processing')"
+            >
+              <q-item-section>
+                <span> 7. Условия обработки персональных данных </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('procedure-for-processing-personal-data')"
+            >
+              <q-item-section>
+                <span>
+                  8. Порядок сбора, хранения, передачи и других видов обработки
+                  персональных данных
+                </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('list-of-actions-with-personal-data')"
+            >
+              <q-item-section>
+                <span>
+                  9. Перечень действий, производимых Оператором с полученными
+                  персональными данными
+                </span>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="scrollTo('cross-border-transfer')">
+              <q-item-section>
+                <span> 10. Трансграничная передача персональных данных </span>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('confidentiality-of-personal-data')"
+            >
+              <q-item-section>
+                <span> 11. Конфиденциальность персональных данных </span>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="scrollTo('final-provisions')">
+              <q-item-section>
+                <span> 12. Заключительные положения </span>
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+          <q-expansion-item
+            class="text-h5"
+            label="Политика файлов Cookie"
+            :content-inset-level="1"
+          >
+            <q-item clickable @click="scrollTo('introduction')">
+              <q-item-section>
+                <span>1. Введение</span>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="scrollTo('definition-and-types')">
+              <q-item-section>
+                <span>2. Определение и виды cookie файлов</span>
+              </q-item-section>
+            </q-item>
+            <q-item clickable @click="scrollTo('list-of-files')">
+              <q-item-section>
+                <span
+                  >3. Список файлов cookie, которые использует Веб-сайт при
+                  своем функционировании</span
+                >
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              @click="scrollTo('management-of-the-transmission')"
+            >
+              <q-item-section>
+                <span
+                  >4. Управление в области передачи и приема файлов cookie</span
+                >
+              </q-item-section>
+            </q-item>
+          </q-expansion-item>
+        </q-expansion-item>
+      </q-list>
+    </q-card>
+
     <q-card class="q-ma-md" id="privacy">
       <q-card-section>
         <div class="text-h4">
           Политика в отношении обработки персональных данных
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="general-provisions">
         <div>
           <div class="text-h5 q-my-md">1. Общие положения</div>
           <span>
@@ -35,7 +180,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="basic-concepts">
         <div>
           <div class="text-h5 q-my-md">
             2. Основные понятия, используемые в Политике
@@ -136,7 +281,10 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section
+        class="column"
+        id="rights-and-obligations-of-the-operator"
+      >
         <div>
           <div class="text-h5 q-my-md">
             3. Основные права и обязанности Оператора
@@ -232,7 +380,10 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section
+        class="column"
+        id="rights-and-obligations-of-the-data-subject"
+      >
         <div>
           <div class="text-h5 q-my-md">
             4. Основные права и обязанности субъектов персональных данных
@@ -315,7 +466,10 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section
+        class="column"
+        id="principles-of-personal-data-processing"
+      >
         <div>
           <div class="text-h5 q-my-md">
             5. Принципы обработки персональных данных
@@ -367,7 +521,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="purposes-of-personal-data-processing">
         <div>
           <div class="text-h5 q-my-md">
             6. Цели обработки персональных данных
@@ -430,7 +584,7 @@
           </q-markup-table>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="terms-of-personal-data-processing">
         <div>
           <div class="text-h5 q-my-md">
             7. Условия обработки персональных данных
@@ -482,7 +636,10 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section
+        class="column"
+        id="procedure-for-processing-personal-data"
+      >
         <div>
           <div class="text-h5 q-my-md">
             8. Порядок сбора, хранения, передачи и других видов обработки
@@ -567,7 +724,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="list-of-actions-with-personal-data">
         <div>
           <div class="text-h5 q-my-md">
             9. Перечень действий, производимых Оператором с полученными
@@ -591,7 +748,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="cross-border-transfer">
         <div>
           <div class="text-h5 q-my-md">
             10. Трансграничная передача персональных данных
@@ -617,7 +774,7 @@
           </div>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="confidentiality-of-personal-data">
         <div>
           <div class="text-h5 q-my-md">
             11. Конфиденциальность персональных данных
@@ -630,7 +787,7 @@
           </span>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="final-provisions">
         <div>
           <div class="text-h5 q-my-md">12. Заключительные положения</div>
 
@@ -659,7 +816,7 @@
       <q-card-section>
         <div class="text-h4">Политика файлов Cookie</div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="introduction">
         <div>
           <div class="text-h5 q-my-md">1. Введение</div>
           <span>
@@ -683,7 +840,7 @@
           </span>
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="definition-and-types">
         <div class="column q-gutter-md">
           <div class="text-h5 q-my-md">2. Определение и виды cookie файлов</div>
           <span>
@@ -746,7 +903,7 @@
           >
         </div>
       </q-card-section>
-      <q-card-section class="column">
+      <q-card-section class="column" id="list-of-files">
         <div class="column q-gutter-md">
           <div class="text-h5 q-my-md">
             3. Список файлов cookie, которые использует Веб-сайт при своем
@@ -821,25 +978,48 @@
               генерирования статистики использования сайта.
             </span>
           </div>
-          <div>
-            <div class="text-h6 q-my-md">
-              4. Управление в области передачи и приема файлов cookie
-            </div>
-            <span>
-              Во многих случаях программное обеспечение для просмотра
-              веб-страниц (веб-браузер) по умолчанию допускает хранение файлов
-              cookie в Вашем устройстве. Вы можете в любой момент внести
-              изменения в настройки файлов cookie. Эти настройки могут быть
-              изменены в настройках веб-браузера. Подробную информацию о
-              возможности и способах передачи файлов cookie, доступны в
-              настройках программного обеспечения (веб-браузера). Обращаем Ваше
-              внимание – отключение поддержки файлов cookie, которые мы
-              используем, может повлиять на функционал Веб-сайта, вплоть до
-              полной невозможности дальнейшего функцианирования.
-            </span>
+        </div>
+      </q-card-section>
+      <q-card-section class="column" id="management-of-the-transmission">
+        <div>
+          <div class="text-h6 q-my-md">
+            4. Управление в области передачи и приема файлов cookie
           </div>
+          <span>
+            Во многих случаях программное обеспечение для просмотра веб-страниц
+            (веб-браузер) по умолчанию допускает хранение файлов cookie в Вашем
+            устройстве. Вы можете в любой момент внести изменения в настройки
+            файлов cookie. Эти настройки могут быть изменены в настройках
+            веб-браузера. Подробную информацию о возможности и способах передачи
+            файлов cookie, доступны в настройках программного обеспечения
+            (веб-браузера). Обращаем Ваше внимание – отключение поддержки файлов
+            cookie, которые мы используем, может повлиять на функционал
+            Веб-сайта, вплоть до полной невозможности дальнейшего
+            функцианирования.
+          </span>
         </div>
       </q-card-section>
     </q-card>
   </q-page>
 </template>
+
+<script setup>
+import { scroll } from "quasar";
+const { setVerticalScrollPosition } = scroll;
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+
+  if (el) {
+    scrollPage(el);
+  }
+}
+
+function scrollPage(el) {
+  const rect = el.getBoundingClientRect(),
+    scrollTop = window.scrollY || document.documentElement.scrollTop,
+    offset = rect.top + scrollTop - 50;
+
+  setVerticalScrollPosition(window, offset, 500);
+}
+</script>
