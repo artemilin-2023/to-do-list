@@ -50,7 +50,7 @@
 
       <q-item class="row">
         <q-item-section avatar>
-          <q-checkbox v-model="acceptPolicy" />
+          <q-toggle v-model="acceptPolicy" :true-value="true" />
         </q-item-section>
         <q-item-section class="col">
           <span>
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { useQuasar } from "quasar";
 import PasswordInput from "src/components/PasswordInput.vue";
 import { ref } from "vue";
 
@@ -100,10 +101,22 @@ export default {
       this.nickname = ref("");
       this.$refs.password.password = ref("");
       this.$refs.confirmPassword.password = ref("");
+      this.acceptPolicy = false;
     },
 
     tryRegister() {
       this.$refs.form.validate().then((isSuccess) => {
+        if (!this.acceptPolicy) {
+          this.$q.notify({
+            color: "red-5",
+            textColor: "white",
+            icon: "warning",
+            message:
+              "Для продолжения необходнимо принять полититку обработки данных.",
+          });
+          return;
+        }
+
         if (isSuccess) {
           this.register();
         }
@@ -111,15 +124,7 @@ export default {
     },
 
     register() {
-      this.$api
-        .post("signup", {
-          username: this.nickname,
-          password: this.$refs.password.password,
-          email: this.email,
-        })
-        .then((result) => {
-          if (result.status == 200) this.$router.push("/");
-        });
+      console.log("register");
     },
   },
 };
