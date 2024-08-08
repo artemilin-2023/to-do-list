@@ -32,7 +32,7 @@
       <div class="mobile-only column q-gutter-sm">
         <q-expansion-item expand-separator icon="filter_alt" label="Фильтрация">
           <board-type-picker ref="typePicker" class="q-mx-md" />
-          <tags-filter ref="tagsPicker" class="q-mx-md" />
+          <tags-picker ref="tagsPicker" class="q-mx-md" />
           <date-range-picker ref="dateRangePicker" class="q-mx-md" />
         </q-expansion-item>
         <q-expansion-item expand-separator icon="sort" label="Сортировка">
@@ -43,7 +43,7 @@
 
       <div class="desktop-only row q-gutter-md no-wrap">
         <board-type-picker ref="typePicker" class="col" />
-        <tags-filter ref="tagsPicker" class="col" />
+        <tags-picker ref="tagsPicker" class="col" />
         <date-range-picker ref="dateRangePicker" class="col" />
         <sort-direction-picker ref="sortDirectionPicker" class="col" />
         <order-by-picker ref="orderByPicker" class="col" />
@@ -84,7 +84,7 @@
 import { ref } from "vue";
 import BoardItem from "src/components/BoardItem.vue";
 import BoardSkeleton from "src/components/BoardSkeleton.vue";
-import TagsFilter from "src/components/TagsFilter.vue";
+import TagsPicker from "src/components/TagsPicker.vue";
 import DateRangePicker from "src/components/DateRangePicker.vue";
 import OrderByPicker from "src/components/OrderByPicker.vue";
 import SortDirectionPicker from "src/components/SortDirectionPicker.vue";
@@ -98,7 +98,7 @@ export default {
   components: {
     BoardItem,
     BoardSkeleton,
-    TagsFilter,
+    TagsPicker,
     BoardTypePicker,
     DateRangePicker,
     OrderByPicker,

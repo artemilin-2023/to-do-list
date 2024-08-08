@@ -1,6 +1,6 @@
 <template>
   <q-expansion-item icon="tag" label="Теги">
-    <div class="row">
+    <div class="row q-pa-md">
       <tag-item
         v-for="tag in this.tags"
         ref="tag"
@@ -36,7 +36,7 @@ import { reactive, ref } from "vue";
 import TagItem from "./TagItem.vue";
 
 export default {
-  name: "TagsFilter",
+  name: "TagsPicker",
   components: { TagItem },
   setup() {
     const tags = reactive([]);

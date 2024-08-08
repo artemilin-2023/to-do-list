@@ -1,5 +1,5 @@
 <template>
-  <q-expansion-item class="q-mx-md" icon="date_range" label="Период создания">
+  <q-expansion-item icon="date_range" label="Период создания">
     <q-date
       :first-day-of-week="1"
       today-btn
