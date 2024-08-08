@@ -26,7 +26,15 @@
       <q-btn
         :color="isSelected ? 'secondary' : 'primary'"
         :icon="isSelected ? 'person_remove' : 'group_add'"
-        @click="isSelected = !isSelected"
+        @click="
+          () => {
+            this.isSelected = !this.isSelected;
+            this.$emit('add-or-delete-friend', {
+              effect: this.isSelected,
+              friend: this.friend,
+            });
+          }
+        "
       />
     </q-item-section>
   </q-item>
@@ -45,6 +53,11 @@ export default {
     return {
       isSelected: ref(false),
     };
+  },
+  methods: {
+    clear() {
+      this.isSelected = false;
+    },
   },
 };
 </script>

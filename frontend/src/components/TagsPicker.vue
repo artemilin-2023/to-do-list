@@ -59,6 +59,12 @@ export default {
         this.selectedTags.splice(this.selectedTags.indexOf(tagEvent.tag), 1);
       }
     },
+    clear() {
+      this.selectedTags = [];
+      for (let i = 0; i < this.$refs.tag.length; i++) {
+        this.$refs.tag[i].clear();
+      }
+    },
   },
 };
 </script>

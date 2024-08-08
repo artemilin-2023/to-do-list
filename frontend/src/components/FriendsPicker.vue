@@ -32,10 +32,12 @@
         </div>
         <q-separator style="order: 0; height: 1px; width: 100%" />
         <friend-item
+          ref="friendItem"
           style="width: 100%"
           v-for="friend in friends"
           :key="friend"
           :friend="friend"
+          @add-or-delete-friend="processAction($event)"
         />
       </q-list>
     </div>
@@ -59,6 +61,7 @@ export default {
     return {
       search: ref(""),
       friends: ref([]),
+      selected: ref([]),
     };
   },
   watch: {
@@ -91,6 +94,19 @@ export default {
           "https://cdn.quasar.dev/img/avatar3.jpg"
         ),
       ];
+    },
+    clear() {
+      this.selected = [];
+      for (let i = 0; i < this.$refs.friendItem.length; i++) {
+        this.$refs.friendItem[i].clear();
+      }
+    },
+    processAction(action) {
+      if (action.effect) {
+        this.selected.push(action.friend);
+      } else {
+        this.selected.splice(this.selected.indexOf(action.friend), 1);
+      }
     },
   },
 };

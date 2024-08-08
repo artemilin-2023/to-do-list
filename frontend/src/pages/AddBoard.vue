@@ -3,6 +3,7 @@
     <div class="row justify-center">
       <q-card style="min-width: 100%">
         <q-form
+          ref="form"
           class="row q-gutter-md q-mx-md q-my-sm"
           @submit="onSubmit"
           @reset="onReset"
@@ -27,7 +28,7 @@
             label="Описание"
           />
 
-          <tags-picker style="flex: 1 1 100%" default-opened />
+          <tags-picker ref="tagsPicker" style="flex: 1 1 100%" default-opened />
 
           <q-toggle
             style="flex: 1 1 100%"
@@ -37,7 +38,11 @@
             :label="isPublic ? 'Совместная доска' : 'Личная доска'"
           />
 
-          <friends-picker v-if="isPublic" style="flex: 1 1 100%" />
+          <friends-picker
+            ref="friendsPicker"
+            v-if="isPublic"
+            style="flex: 1 1 100%"
+          />
 
           <div style="flex: 1 1 100%" class="row justify-end q-gutter-sm">
             <q-btn
@@ -61,6 +66,7 @@
 </template>
 
 <script>
+import BoardApi from "src/api/BoardApi";
 import FriendsPicker from "src/components/FriendsPicker.vue";
 import TagsPicker from "src/components/TagsPicker.vue";
 import { ref } from "vue";
@@ -68,6 +74,21 @@ import { ref } from "vue";
 export default {
   name: "AddBoard",
   components: { TagsPicker, FriendsPicker },
+
+  mounted() {
+    this.boardApi = new BoardApi(this.$api);
+  },
+  setup() {
+    const tagsPicker = ref();
+    const form = ref();
+    const friendsPicker = ref();
+
+    return {
+      tagsPicker,
+      form,
+      friendsPicker,
+    };
+  },
 
   data() {
     return {
@@ -79,12 +100,23 @@ export default {
   },
 
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.isLoad = true;
-      console.log("submit");
+      await this.boardApi.post(
+        this.title,
+        this.description,
+        this.isPublic,
+        this.tagsPicker.selectedTags,
+        this.friendsPicker ? this.friendsPicker.selected : null
+      );
+      this.isLoad = false;
     },
     onReset() {
-      console.log("reset");
+      if (this.isPublic) this.friendsPicker.clear();
+      this.tagsPicker.clear();
+      this.form.resetValidation();
+      this.title = "";
+      this.description = "";
     },
   },
 };

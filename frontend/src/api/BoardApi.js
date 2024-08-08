@@ -52,8 +52,31 @@ export default class BoardApi {
     console.log(`delete board: /boards/${id}`);
   }
 
-  post(title, description, tags, teammates) {
-    return;
+  async post(title, description, isPublic, tags, teammates) {
+    let result;
+    await this.api
+      .post("boards", {
+        params: {
+          title: title,
+          description: description,
+          isPublic: isPublic,
+          tags: tags,
+          teammates: teammates,
+        },
+      })
+      .then((response) => {
+        if (response.code == 201) {
+          result = new RequsetResult(201, "success");
+        }
+      })
+      .catch((error) => {
+        result = new RequsetResult(
+          error.response.status,
+          error.response.data,
+          error.response.data.errorMessage
+        );
+      });
+    return result;
   }
 
   patch(id, title, description, tags, teammates) {
